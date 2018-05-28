@@ -58,6 +58,9 @@ Kc = [randint(0,pow(2,alpha)-1) for i in range(n)]
 print('Vector Kr : ', Kr)
 print('Vector Kc : ', Kc)
 
+f = open('keys.txt','w+')
+f.write('Vector Kr : ' + str(Kr) + '\n')
+f.write('Vector Kc : ' + str(Kc) + '\n')
 ITER_MAX = 1
 
 for iterations in range(ITER_MAX):
