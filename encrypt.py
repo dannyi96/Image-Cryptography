@@ -2,12 +2,12 @@ import Image
 from random import randint
 import numpy
 
-im = Image.open('pic2.png')
+im = Image.open('pic1.png')
 pixels = list(im.getdata())
 pix = im.load()
-print(pix[0,0])
-print(pixels[0])
-print(im.size)
+#print(pix[0,0])
+#print(pixels[0])
+#print(im.size)
 
 def upshift(a,index,n):
 	col = []
@@ -28,6 +28,10 @@ def downshift(a,index,n):
 		for j in range(len(a[0])):
 			if(j==index):
 				a[i][j] = shiftCol[i]
+
+def rotate180(n):
+	bits = "{0:b}".format(n)
+	return int(bits[::-1], 2)
 
 #Obtaining the RGB matrices
 r = []
@@ -51,10 +55,10 @@ alpha = 8
 Kr = [randint(0,pow(2,alpha)-1) for i in range(m)]
 Kc = [randint(0,pow(2,alpha)-1) for i in range(n)]
 
-print(Kr)
-print(Kc)
+print('Vector Kr : ', Kr)
+print('Vector Kc : ', Kc)
 
-ITER_MAX = 10
+ITER_MAX = 1
 
 for iterations in range(ITER_MAX):
 	# For each row
@@ -101,13 +105,35 @@ for iterations in range(ITER_MAX):
 			upshift(b,i,Kc[i])
 		else:
 			downshift(b,i,Kc[i])
+	# For each row
+	for i in range(m):
+		for j in range(n):
+			if(i%2==1):
+				r[i][j] = r[i][j] ^ Kc[j]
+				g[i][j] = g[i][j] ^ Kc[j]
+				b[i][j] = b[i][j] ^ Kc[j]
+			else:
+				r[i][j] = r[i][j] ^ rotate180(Kc[j])
+				g[i][j] = g[i][j] ^ rotate180(Kc[j])
+				b[i][j] = b[i][j] ^ rotate180(Kc[j])
+	# For each column
+	for j in range(n):
+		for i in range(m):
+			if(j%2==0):
+				r[i][j] = r[i][j] ^ Kr[i]
+				g[i][j] = g[i][j] ^ Kr[i]
+				b[i][j] = b[i][j] ^ Kr[i]
+			else:
+				r[i][j] = r[i][j] ^ rotate180(Kr[i])
+				g[i][j] = g[i][j] ^ rotate180(Kr[i])
+				b[i][j] = b[i][j] ^ rotate180(Kr[i])
 
 
 for i in range(m):
 	for j in range(n):
 		pix[i,j] = (r[i][j],g[i][j],b[i][j])
 
-im.save('encrypt2.png')
+im.save('encrypt.png')
 
 
 
