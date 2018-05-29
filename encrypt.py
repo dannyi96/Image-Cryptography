@@ -1,37 +1,11 @@
 import Image
 from random import randint
 import numpy
+import sys
+from helper import *
 
-im = Image.open('pic1.png')
-pixels = list(im.getdata())
+im = Image.open('input/' + sys.argv[1])
 pix = im.load()
-#print(pix[0,0])
-#print(pixels[0])
-#print(im.size)
-
-def upshift(a,index,n):
-	col = []
-	for j in range(len(a)):
-		col.append(a[j][index])
-	shiftCol = numpy.roll(col,-n)
-	for i in range(len(a)):
-		for j in range(len(a[0])):
-			if(j==index):
-				a[i][j] = shiftCol[i]
-
-def downshift(a,index,n):
-	col = []
-	for j in range(len(a)):
-		col.append(a[j][index])
-	shiftCol = numpy.roll(col,n)
-	for i in range(len(a)):
-		for j in range(len(a[0])):
-			if(j==index):
-				a[i][j] = shiftCol[i]
-
-def rotate180(n):
-	bits = "{0:b}".format(n)
-	return int(bits[::-1], 2)
 
 #Obtaining the RGB matrices
 r = []
@@ -54,14 +28,21 @@ n = im.size[1]
 alpha = 8
 Kr = [randint(0,pow(2,alpha)-1) for i in range(m)]
 Kc = [randint(0,pow(2,alpha)-1) for i in range(n)]
+ITER_MAX = 1
 
 print('Vector Kr : ', Kr)
 print('Vector Kc : ', Kc)
 
 f = open('keys.txt','w+')
-f.write('Vector Kr : ' + str(Kr) + '\n')
-f.write('Vector Kc : ' + str(Kc) + '\n')
-ITER_MAX = 1
+f.write('Vector Kr : \n')
+for a in Kr:
+	f.write(str(a) + '\n')
+f.write('Vector Kc : \n')
+for a in Kc:
+	f.write(str(a) + '\n')
+f.write('ITER_MAX : \n')
+f.write(str(ITER_MAX) + '\n')
+
 
 for iterations in range(ITER_MAX):
 	# For each row
@@ -136,7 +117,7 @@ for i in range(m):
 	for j in range(n):
 		pix[i,j] = (r[i][j],g[i][j],b[i][j])
 
-im.save('encrypt.png')
+im.save('encrypted_images/' + sys.argv[1])
 
 
 
