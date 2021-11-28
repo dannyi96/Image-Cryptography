@@ -1,9 +1,7 @@
 from PIL import Image
 from random import randint
 import numpy
-import sys
 import json
-import argparse
 
 class RubikCubeEncryptor:
 
@@ -18,6 +16,9 @@ class RubikCubeEncryptor:
 		self.load_rgb_matrix()
 
 	def load_rgb_matrix(self):
+		"""
+		Loads the Red(R), Green(G) & Blue(B) Matrices of the input image
+		"""
 		for i in range(self.m):
 			self.r.append([])
 			self.g.append([])
@@ -28,16 +29,40 @@ class RubikCubeEncryptor:
 				self.g[i].append(rgbPerPixel[1])
 				self.b[i].append(rgbPerPixel[2])
 
-	def create_vectors(self, alpha):
+	def create_vectors(self, alpha, Kr_filename='Kr.txt', Kc_filename='Kc.txt'):
+		"""
+		Create the two vectors using the value alpha
+			- Vector Kr - M elements randomnly picked b/w 0 and 2^alpha - 1
+			- Vector Kc - N elements randomnly picked b/w 0 and 2^alpha - 1
+
+		Parameters
+		----------
+		alpha : integer
+			hyperparameter alpha which is used in generarting the two vectors
+		Kr_filename : string
+			Filename to store the vector Kr
+		Kc_filename : string
+			Filename to store the vector Kc
+		"""
 		self.Kr = [randint(0,pow(2,alpha)-1) for i in range(self.m)]
-		Kr_file = open('Kr.txt','w+')
+		Kr_file = open(Kr_filename,'w+')
 		Kr_file.write(str(self.Kr))		
 
 		self.Kc = [randint(0,pow(2,alpha)-1) for i in range(self.n)]
-		Kc_file = open('Kc.txt','w+')
+		Kc_file = open(Kc_filename,'w+')
 		Kc_file.write(str(self.Kc))
    
 	def load_vectors(self, Kr_filename, Kc_filename):
+		"""
+		Load the two vectors Kr and Kc from the input files provided
+
+		Parameters
+		----------
+		Kr_filename : string
+			File storing the vector Kr
+		Kc_filename : string
+			File storing the vector Kc
+		"""
 		Kr_file = open(Kr_filename,'r')
 		self.Kr = json.loads(Kr_file.readline())
 
@@ -45,6 +70,14 @@ class RubikCubeEncryptor:
 		self.Kc = json.loads(Kc_file.readline())
 
 	def roll_row(self, encrypt_flag=True):
+		"""
+		Peform the Rolling Rows stage of Rubik Encryption/Decryption
+
+		Parameters
+		----------
+		encrypt_flag : boolean
+			flag indicating whether to perform encryption or decryption
+		"""
 		direction_multiplier = 1 if encrypt_flag else -1
   		# For each row
 		for i in range(self.m):
@@ -58,6 +91,14 @@ class RubikCubeEncryptor:
 
 
 	def shift_column(self, encrypt_flag=True):
+		"""
+		Peform the Shifting Columns stage of Rubik Encryption/Decryption
+
+		Parameters
+		----------
+		encrypt_flag : boolean
+			flag indicating whether to perform encryption or decryption
+		"""
 		for i in range(self.n):
 			rTotalSum = 0
 			gTotalSum = 0
@@ -98,55 +139,37 @@ class RubikCubeEncryptor:
 
 
 	def xor_pixels(self, encrypt_flag=True):
-		if encrypt_flag:
-			# For each row
-			for i in range(self.m):
-				for j in range(self.n):
-					if(i%2==1):
-						self.r[i][j] = self.r[i][j] ^ self.Kc[j]
-						self.g[i][j] = self.g[i][j] ^ self.Kc[j]
-						self.b[i][j] = self.b[i][j] ^ self.Kc[j]
-					else:
-						self.r[i][j] = self.r[i][j] ^ self.rotate180(self.Kc[j])
-						self.g[i][j] = self.g[i][j] ^ self.rotate180(self.Kc[j])
-						self.b[i][j] = self.b[i][j] ^ self.rotate180(self.Kc[j])
-			# For each column
+		"""
+		Peform the XOR Cells stage of Rubik Encryption/Decryption
+
+		Parameters
+		----------
+		encrypt_flag : boolean
+			flag indicating whether to perform encryption or decryption
+		"""
+		# For each pixel
+		for i in range(self.m):
 			for j in range(self.n):
-				for i in range(self.m):
-					if(j%2==0):
-						self.r[i][j] = self.r[i][j] ^ self.Kr[i]
-						self.g[i][j] = self.g[i][j] ^ self.Kr[i]
-						self.b[i][j] = self.b[i][j] ^ self.Kr[i]
-					else:
-						self.r[i][j] = self.r[i][j] ^ self.rotate180(self.Kr[i])
-						self.g[i][j] = self.g[i][j] ^ self.rotate180(self.Kr[i])
-						self.b[i][j] = self.b[i][j] ^ self.rotate180(self.Kr[i])
-		else:
-			# For each column
-			for j in range(self.n):
-				for i in range(self.m):
-					if(j%2==0):
-						self.r[i][j] = self.r[i][j] ^ self.Kr[i]
-						self.g[i][j] = self.g[i][j] ^ self.Kr[i]
-						self.b[i][j] = self.b[i][j] ^ self.Kr[i]
-					else:
-						self.r[i][j] = self.r[i][j] ^ self.rotate180(self.Kr[i])
-						self.g[i][j] = self.g[i][j] ^ self.rotate180(self.Kr[i])
-						self.b[i][j] = self.b[i][j] ^ self.rotate180(self.Kr[i])
-			# For each row
-			for i in range(self.m):
-				for j in range(self.n):
-					if(i%2==1):
-						self.r[i][j] = self.r[i][j] ^ self.Kc[j]
-						self.g[i][j] = self.g[i][j] ^ self.Kc[j]
-						self.b[i][j] = self.b[i][j] ^ self.Kc[j]
-					else:
-						self.r[i][j] = self.r[i][j] ^ self.rotate180(self.Kc[j])
-						self.g[i][j] = self.g[i][j] ^ self.rotate180(self.Kc[j])
-						self.b[i][j] = self.b[i][j] ^ self.rotate180(self.Kc[j])
+				xor_operand_1 = self.Kc[j] if i%2==1 else self.rotate180(self.Kc[j])
+				xor_operand_2 = self.Kr[i] if j%2==0 else self.rotate180(self.Kr[i])
+				self.r[i][j] = self.r[i][j] ^ xor_operand_1 ^ xor_operand_2
+				self.g[i][j] = self.g[i][j] ^ xor_operand_1 ^ xor_operand_2
+				self.b[i][j] = self.b[i][j] ^ xor_operand_1 ^ xor_operand_2
 
 
 	def upshift(self, a, index, n):
+		"""
+		Peform Matrix Upshift operation
+
+		Parameters
+		----------
+		a : List
+			matrix to perform upshift operation on
+		index: integer
+			column on which to perform the upshift
+		n: integer
+			number of times to perform the shift
+		"""
 		col = []
 		for j in range(len(a)):
 			col.append(a[j][index])
@@ -157,6 +180,18 @@ class RubikCubeEncryptor:
 					a[i][j] = shiftCol[i]
 
 	def downshift(self, a, index, n):
+		"""
+		Peform Matrix Downshift operation
+
+		Parameters
+		----------
+		a : List
+			matrix to perform downshift operation on
+		index: integer
+			column on which to perform the downshift
+		n: integer
+			number of times to perform the shift
+		"""
 		col = []
 		for j in range(len(a)):
 			col.append(a[j][index])
@@ -167,10 +202,33 @@ class RubikCubeEncryptor:
 					a[i][j] = shiftCol[i]
 
 	def rotate180(self, n):
+		"""
+		Peform complete 180 Bit Rotation of number
+		( eg - decimal 11 (1011 in binary) becomes decimal 13(1101 in binary) )
+
+		Parameters
+		----------
+		n: integer
+			number on which to perform 180 bit rotation
+		Returns
+		-------
+		Integer
+			number obtained on performing 180 bit rotation of given number
+		"""
 		bits = "{0:b}".format(n)
 		return int(bits[::-1], 2)
 
-	def encrypt(self, iter_max=10, alpha = 8):
+	def encrypt(self, output_image='encrypted_output.png', iter_max=10, alpha = 8):
+		"""
+		Peform encryption of the input image
+
+		Parameters
+		----------
+		iter_max: integer
+			Maximum number of iterations to perform
+		alpha: integer
+			Hyperparameter needed for vector generation
+		"""
 		self.create_vectors(alpha)
 		for iterations in range(iter_max):
 			self.roll_row(encrypt_flag = True)
@@ -180,10 +238,22 @@ class RubikCubeEncryptor:
 			for j in range(self.n):
 				self.pixels[i,j] = (self.r[i][j], self.g[i][j], self.b[i][j])
 
-		self.image.save('encrypted_images/test.png')
+		self.image.save(output_image)
   
-	def decrypt(self, Kr_file, Kc_file, iter_max=10):
-		self.load_vectors(Kr_file, Kc_file)
+	def decrypt(self, Kr_filename, Kc_filename, output_image='decrypted_output.png', iter_max=10):
+		"""
+		Peform decryption of the input image
+
+		Parameters
+		----------
+		Kr_filename : string
+			File storing the vector Kr
+		Kc_filename : string
+			File storing the vector Kc
+		iter_max: integer
+			Maximum number of iterations to perform
+		"""
+		self.load_vectors(Kr_filename, Kc_filename)
 		for iterations in range(iter_max):
 			self.xor_pixels(encrypt_flag = False)
 			self.shift_column(encrypt_flag = False)
@@ -193,25 +263,4 @@ class RubikCubeEncryptor:
 			for j in range(self.n):
 				self.pixels[i,j] = (self.r[i][j], self.g[i][j], self.b[i][j])
 
-		self.image.save('decrypted_images/test.png')
-
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser()
-	parser.add_argument("encrypt", help="indicate whether to encrypt or decrypt image")
-	parser.add_argument("--image", help="indicate input image path")
-	parser.add_argument("--output_image", help="indicate output image path")
-	parser.add_argument("--Krfile", help="indicate kr file path(in case of decryption)")
-	parser.add_argument("--Kcfile", help="indicate kc file path(in case of encryption)")
-	
-
-	args = parser.parse_args()
-	input_image = args.image
-	if args.encrypt == "true":		
-		encryptor = RubikCubeEncryptor(input_image)
-		encryptor.encrypt(iter_max=10)
-	else:
-		Krfile = args.Krfile
-		Kcfile = args.Kcfile
-		decryptor = RubikCubeEncryptor(input_image)
-		decryptor.decrypt(Krfile,Kcfile,10)
-  
+		self.image.save(output_image)
