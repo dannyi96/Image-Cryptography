@@ -1,6 +1,6 @@
 from PIL import Image
 from random import randint
-import numpy
+import numpy as np
 import json
 
 class RubikCubeEncryptor:
@@ -15,6 +15,7 @@ class RubikCubeEncryptor:
 		self.b = []
 		self.load_rgb_matrix()
 
+
 	def load_rgb_matrix(self):
 		"""
 		Loads the Red(R), Green(G) & Blue(B) Matrices of the input image
@@ -28,6 +29,7 @@ class RubikCubeEncryptor:
 				self.r[i].append(rgbPerPixel[0])
 				self.g[i].append(rgbPerPixel[1])
 				self.b[i].append(rgbPerPixel[2])
+
 
 	def create_vectors(self, alpha, Kr_filename='Kr.txt', Kc_filename='Kc.txt'):
 		"""
@@ -52,6 +54,7 @@ class RubikCubeEncryptor:
 		Kc_file = open(Kc_filename,'w+')
 		Kc_file.write(str(self.Kc))
    
+   
 	def load_vectors(self, Kr_filename, Kc_filename):
 		"""
 		Load the two vectors Kr and Kc from the input files provided
@@ -69,6 +72,7 @@ class RubikCubeEncryptor:
 		Kc_file = open(Kc_filename,'r')
 		self.Kc = json.loads(Kc_file.readline())
 
+
 	def roll_row(self, encrypt_flag=True):
 		"""
 		Peform the Rolling Rows stage of Rubik Encryption/Decryption
@@ -85,9 +89,9 @@ class RubikCubeEncryptor:
 			gModulus = sum(self.g[i]) % 2
 			bModulus = sum(self.b[i]) % 2
 			
-			self.r[i] = numpy.roll(self.r[i],direction_multiplier * self.Kr[i]) if(rModulus==0) else numpy.roll(self.r[i], direction_multiplier * -self.Kr[i])
-			self.g[i] = numpy.roll(self.g[i],direction_multiplier * self.Kr[i]) if(gModulus==0) else numpy.roll(self.g[i], direction_multiplier * -self.Kr[i])
-			self.b[i] = numpy.roll(self.b[i],direction_multiplier * self.Kr[i]) if(bModulus==0) else numpy.roll(self.b[i], direction_multiplier * -self.Kr[i])
+			self.r[i] = np.roll(self.r[i],direction_multiplier * self.Kr[i]) if(rModulus==0) else np.roll(self.r[i], direction_multiplier * -self.Kr[i])
+			self.g[i] = np.roll(self.g[i],direction_multiplier * self.Kr[i]) if(gModulus==0) else np.roll(self.g[i], direction_multiplier * -self.Kr[i])
+			self.b[i] = np.roll(self.b[i],direction_multiplier * self.Kr[i]) if(bModulus==0) else np.roll(self.b[i], direction_multiplier * -self.Kr[i])
 
 
 	def shift_column(self, encrypt_flag=True):
@@ -99,44 +103,26 @@ class RubikCubeEncryptor:
 		encrypt_flag : boolean
 			flag indicating whether to perform encryption or decryption
 		"""
-		for i in range(self.n):
-			rTotalSum = 0
-			gTotalSum = 0
-			bTotalSum = 0
-			for j in range(self.m):
-				rTotalSum += self.r[j][i]
-				gTotalSum += self.g[j][i]
-				bTotalSum += self.b[j][i]
-			rModulus = rTotalSum % 2
-			gModulus = gTotalSum % 2
-			bModulus = bTotalSum % 2
-			if(encrypt_flag):
-				if(rModulus==0):
-					self.upshift(self.r,i,self.Kc[i])
-				else:
-					self.downshift(self.r,i,self.Kc[i])
-				if(gModulus==0):
-					self.upshift(self.g,i,self.Kc[i])
-				else:
-					self.downshift(self.g,i,self.Kc[i])
-				if(bModulus==0):
-					self.upshift(self.b,i,self.Kc[i])
-				else:
-					self.downshift(self.b,i,self.Kc[i])
-			else:
-				if(rModulus==0):
-					self.downshift(self.r,i,self.Kc[i])
-				else:
-					self.upshift(self.r,i,self.Kc[i])
-				if(gModulus==0):
-					self.downshift(self.g,i,self.Kc[i])
-				else:
-					self.upshift(self.g,i,self.Kc[i])
-				if(bModulus==0):
-					self.downshift(self.b,i,self.Kc[i])
-				else:
-					self.upshift(self.b,i,self.Kc[i])
+		transpose_r = np.transpose(self.r)
+		transpose_g = np.transpose(self.g)
+		transpose_b = np.transpose(self.b)
+		
+		direction_multiplier = 1 if encrypt_flag else -1
 
+		# For each row of the transpose matrices
+		for i in range(self.m):
+			rModulus = sum(transpose_r[i]) % 2
+			gModulus = sum(transpose_g[i]) % 2
+			bModulus = sum(transpose_b[i]) % 2
+			
+			transpose_r[i] = np.roll(transpose_r[i],direction_multiplier * -self.Kc[i]) if(rModulus==0) else np.roll(transpose_r[i], direction_multiplier * self.Kc[i])
+			transpose_g[i] = np.roll(transpose_g[i],direction_multiplier * -self.Kc[i]) if(gModulus==0) else np.roll(transpose_g[i], direction_multiplier * self.Kc[i])
+			transpose_b[i] = np.roll(transpose_b[i],direction_multiplier * -self.Kc[i]) if(bModulus==0) else np.roll(transpose_b[i], direction_multiplier * self.Kc[i])
+
+		self.r = np.transpose(transpose_r)
+		self.g = np.transpose(transpose_g)
+		self.b = np.transpose(transpose_b)
+  
 
 	def xor_pixels(self, encrypt_flag=True):
 		"""
@@ -157,50 +143,6 @@ class RubikCubeEncryptor:
 				self.b[i][j] = self.b[i][j] ^ xor_operand_1 ^ xor_operand_2
 
 
-	def upshift(self, a, index, n):
-		"""
-		Peform Matrix Upshift operation
-
-		Parameters
-		----------
-		a : List
-			matrix to perform upshift operation on
-		index: integer
-			column on which to perform the upshift
-		n: integer
-			number of times to perform the shift
-		"""
-		col = []
-		for j in range(len(a)):
-			col.append(a[j][index])
-		shiftCol = numpy.roll(col,-n)
-		for i in range(len(a)):
-			for j in range(len(a[0])):
-				if(j==index):
-					a[i][j] = shiftCol[i]
-
-	def downshift(self, a, index, n):
-		"""
-		Peform Matrix Downshift operation
-
-		Parameters
-		----------
-		a : List
-			matrix to perform downshift operation on
-		index: integer
-			column on which to perform the downshift
-		n: integer
-			number of times to perform the shift
-		"""
-		col = []
-		for j in range(len(a)):
-			col.append(a[j][index])
-		shiftCol = numpy.roll(col,n)
-		for i in range(len(a)):
-			for j in range(len(a[0])):
-				if(j==index):
-					a[i][j] = shiftCol[i]
-
 	def rotate180(self, n):
 		"""
 		Peform complete 180 Bit Rotation of number
@@ -217,6 +159,7 @@ class RubikCubeEncryptor:
 		"""
 		bits = "{0:b}".format(n)
 		return int(bits[::-1], 2)
+
 
 	def encrypt(self, output_image='encrypted_output.png', iter_max=10, alpha = 8):
 		"""
@@ -239,6 +182,7 @@ class RubikCubeEncryptor:
 				self.pixels[i,j] = (self.r[i][j], self.g[i][j], self.b[i][j])
 
 		self.image.save(output_image)
+  
   
 	def decrypt(self, Kr_filename, Kc_filename, output_image='decrypted_output.png', iter_max=10):
 		"""
