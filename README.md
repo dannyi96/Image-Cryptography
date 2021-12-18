@@ -1,57 +1,75 @@
 # Image Cryptography Based on Rubix's Cube Principle
 
-Implementation of image encryption and decryption using Rubix's Cube Principle. This algorithm is based on 
-the paper which can be found at https://www.hindawi.com/journals/jece/2012/173931/
+Implementation of image encryption and decryption using Rubix's Cube Principle. This algorithm is based on the paper ["A Secure Image Encryption Algorithm Based on Rubik's Cube Principle"](https://www.hindawi.com/journals/jece/2012/173931/) by Khaled Loukhaoukha, Jean-Yves Chouinard and Abdellah Berdai.
+
+## Algorithm Overview
+
+Given an input image having the three R,G,B matrices of size `M X N`
+Hyperparameters include 
+`α` - used for vector creation
+`ITER_MAX` - maximum number of times to carry out operations
+
+#### A. Encyption
+1. Create two vectors `Kr` and `Kc` with `|Kr|=M` & `|Kc|=N`. The values of these vectors are randomly picked from 0 to 2<sup>α </sup>-1
+2. Repeat below steps `ITER_MAX` number of times
+
+    i. **Rolling Rows:** 
+        
+      * The sum of all pixel values of every row of the image RGB matrices are calculated one by one. 
+        
+      * If the sum of a given row `rowNumber` is even, Roll the row to the right `Kr[rowNumber]` times 
+        Otherwise roll to the left `Kr[rowNumber]` times.
+
+    ii. **Rolling Columns:**
+    
+      * The sum of all pixel values of every column of the image RGB matrices are calculated one by one. 
+        
+      * If the sum of a given row `columnNumber` is even, roll the column up `Kc[columnNumber]` times.
+        Otherwise roll the column down `Kc[columnNumber]` times.
+
+    iii. **XORing Pixels:**
+    
+      * For every pixel(i,j), XOR the pixel with the below two values
+        
+         - Value #1 - `Kc[columnNumber]` if `i` is odd else 180 rotated bit version of `Kc[columnNumber]`
+        
+         - Value #2 - `Kr[rowNumber]` if `j` is even else 180 rotated bit version of `Kr[rowNumber]`
+
+
+#### B. Decryption
+  Given an encrypted image, vectors `Kr` and `Kc` & `ITER_MAX` , decryption can be done by following the reverse procedure - XORing pixels → Rolling Columns → Rolling Rows `ITER_MAX` number of times
 
 ## Prerequisites
 
-You need to have Python2 on your system. Follow instructions at https://www.python.org/downloads/  
-You also need to install numpy and Image libraries.
+- Python3 ( https://www.python.org/downloads/ )
 
-On Ubuntu
-```
-sudo apt-get install python-numpy
-sudo apt-get install python-imaging
-```
+- Python3 package dependencies - Run `pip3 install -r requirements.txt`
 
 ## Running 
 
-1. To encrypt an image, first place that image in the ```input/``` folder  
-2. Then run  
-``` python encrypt.py <image_name> ```  
-The encrypted image can be found at the ```encrypted_images/``` folder.       
-The keys generated during encryption is stored in the ```keys.txt``` file.  
-(Note: The number of iterations of encryption to be performed can be adjusted by changing the ```ITER_MAX``` value in the ```encrypt.py``` file. Larger values will make encryption more secure but it is more time consuming)
 
-3. To decrypt the image, run  
-``` python decrypt.py <image_name> ```  
-And Then enter the value of the Keys (Kr, Kc and ITER_MAX)  
-The decrypted image can be found at the ```decrypted_images/``` folder.     
+1. Using the crypto_client.py script supplying neccessary parameters
+```
+$ python3 crypto_client.py -h
+usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] 
+      [--alpha ALPHA] [--iter_max ITER_MAX] 
+      [--key KEY] [--output_image OUTPUT_IMAGE]
+```
 
-## Example
+2. Using rubikencryptor python package
+```
+from rubikencryptor.rubikencryptor import RubikCubeCrypto
+from PIL import Image
 
-1. To encrypt the image ```pic3.png``` stored in the ```input``` folder
+# Encrypt image
+input_image = Image.open('image1.png')
+encryptor = RubikCubeCrypto(input_image)
+encrypted_image = encryptor.encrypt(alpha=8, iter_max=10, key_filename='key.txt')
+encrypted_image.save('encrypted_image.png')
 
-![](https://github.com/danny311296/Image-Cryptography/blob/master/input/pic3.png)
-
-Run
-``` python encrypt.py pic3.png ```  
-
-The encrypted Picture can be found at ```encrypted_images/pic3.png```
-
-![](https://github.com/danny311296/Image-Cryptography/blob/master/encrypted_images/pic3.png)
-
-The keys are stored in ```keys.txt ```
-
-2. To decrypt the image
-
-Run
-``` python decrypt.py pic3.png ``` 
-
-and enter the key values (Kr, Kc and ITER_MAX)  
-
-The decrypted Picture can be found at ```decrypted_images/pic3.png```
-
-![](https://github.com/danny311296/Image-Cryptography/blob/master/decrypted_images/pic3.png)
-
-
+# Decrypt image
+decryptor = RubikCubeCrypto(encrypted_image)
+decrypted_image = decryptor.decrypt(key_filename='key.txt')
+decrypted_image.save('decrypted_image.png')
+```
+    
