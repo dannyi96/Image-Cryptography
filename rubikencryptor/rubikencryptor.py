@@ -26,7 +26,7 @@ class RubikCubeCrypto:
 		iter_max : int
 			Maximum number of iterations to perform
 		key_filename : str
-			Filename to store the encryption key ( contains the two geneated vectors Kr, Kc & the iter_max )
+			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
 		"""
 		self.Kr = [randint(0,pow(2,alpha)-1) for i in range(self.m)]
 		self.Kc = [randint(0,pow(2,alpha)-1) for i in range(self.n)]
@@ -148,7 +148,7 @@ class RubikCubeCrypto:
 		return int(bits[::-1], 2)
 
 
-	def encrypt(self, output_image: str = 'encrypted_output.png', iter_max: int = 10, alpha: int = 8) -> Image:
+	def encrypt(self, alpha: int = 8, iter_max: int = 10, key_filename: str = 'key.txt') -> Image:
 		"""
 		Peform encryption of the input image
 
@@ -158,28 +158,27 @@ class RubikCubeCrypto:
 			Maximum number of iterations to perform
 		alpha: int
 			Hyperparameter needed for vector generation
+   		key_filename : str
+			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
 		"""
-		self.create_key(alpha, iter_max)
+		self.create_key(alpha, iter_max, key_filename)
 		for _ in range(iter_max):
 			self.roll_row(encrypt_flag = True)
 			self.roll_column(encrypt_flag = True)
 			self.xor_pixels(encrypt_flag = True)
 
 		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
-		new_image.save(output_image)
 		return new_image
 
   
-	def decrypt(self, key_filename: str, output_image: str = 'decrypted_output.png') -> Image:
+	def decrypt(self, key_filename: str) -> Image:
 		"""
 		Peform decryption of the input image
 
 		Parameters
 		----------
-		Kr_filename : str
-			File storing the vector Kr
-		Kc_filename : str
-			File storing the vector Kc
+		key_filename : str
+			Key file generated from encryption ( contains the two generated vectors Kr, Kc & the iter_max )
 		iter_max: int
 			Maximum number of iterations to perform
 		"""
@@ -190,12 +189,14 @@ class RubikCubeCrypto:
 			self.roll_row(encrypt_flag = False)
 
 		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
-		new_image.save(output_image)
 		return new_image
 
 if __name__ == '__main__':
-	encryptor = RubikCubeCrypto(Image.open('input/pic1.png'))
-	encryptor.encrypt()
- 
-	decryptor = RubikCubeCrypto(Image.open('encrypted_output.png'))
-	decryptor.decrypt(key_filename='key.txt')
+	input_image = Image.open('input/pic1.png')
+	encryptor = RubikCubeCrypto(input_image)
+	encryped_image = encryptor.encrypt(alpha = 8, iter_max = 20, key_filename = 'encoded_key.txt')
+	encryped_image.save("ENC1.png")
+	
+	decryptor = RubikCubeCrypto(encryped_image)
+	decryped_image = decryptor.decrypt(key_filename='encoded_key.txt')
+	decryped_image.save('DEC1.png')
