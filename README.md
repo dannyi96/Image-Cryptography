@@ -2,8 +2,6 @@
 
 Implementation of image encryption and decryption using Rubix's Cube Principle. This algorithm is based on the paper ["A Secure Image Encryption Algorithm Based on Rubik's Cube Principle"](https://www.hindawi.com/journals/jece/2012/173931/) by Khaled Loukhaoukha, Jean-Yves Chouinard and Abdellah Berdai.
 
----
-
 ## Algorithm Overview
 
 Given an input image having the three R,G,B matrices of size `M X N`
@@ -17,16 +15,16 @@ Hyperparameters include
 3. **Rolling Rows:** 
 The sum of all pixel values of every row of the image RGB matrices are calculated one by one
 if the sum of a given row `rowNumber` is even,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we roll the row to the right `Kr[rowNumber]` times
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll the row to the right `Kr[rowNumber]` times
 and if the sum is odd
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we roll the row to the left `Kr[rowNumber]` times
-4. **Shifting Columns:** 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll the row to the left `Kr[rowNumber]` times
+1. **Rolling Columns:** 
 The sum of all pixel values of every column of the image RGB matrices are calculated one by one
 if the sum of a given row `columnNumber` is even,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we shift the column to the up `Kc[columnNumber]` times
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; roll the column up `Kc[columnNumber]` times
 and if the sum is odd
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;we roll the column to the left `Kc[columnNumber]` times
-5. **XORing Pixels:**
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; roll the column down `Kc[columnNumber]` times
+1. **XORing Pixels:**
 For every pixel(i,j), XOR the pixel with the below two values
 I. `Kc[columnNumber]` if `i` is odd else 180 rotated bit version of `Kc[columnNumber]`
 II. `Kr[rowNumber]` if `j` is even else 180 rotated bit version of `Kr[rowNumber]`
@@ -35,11 +33,9 @@ II. `Kr[rowNumber]` if `j` is even else 180 rotated bit version of `Kr[rowNumber
 #### B. Decryption
 Decryption just follows the reverse procedure of encryption. 
 Given an encrypted image, vectors `Kr` and `Kc` & `ITER_MAX` , 
-decryption can be done by XORing pixels(in reverse sequence) → Shifting Columns → Rolling Rows `ITER_MAX` number of times
+decryption can be done by XORing pixels(in reverse sequence) → Rolling Columns → Rolling Rows `ITER_MAX` number of times
 
----
-
-## Encryption Example 
+## Example 
 Input image has matrices `R`, `G` and `B` of size 3 X 3
 `α` is chosen as 10
 `ITER_MAX` is chosen as 1 (for purpose of this example)
@@ -75,7 +71,7 @@ R` = $\left[\begin{array}{ccc}
 9 & 7 & 8\\
 \end{array}\right]$
 
-**Step 3: Shifting Columns**
+**Step 3: Rolling Columns**
 
 sum(col0) = 2+5+9 = 16 = even → shift column upwards 910(ie- Vc[0]) times
 sum(col1) = 3+6+7 = 16 = even → shift to the left 365(ie- Vc[1]) times
@@ -105,16 +101,16 @@ Same steps are followed for the `G` and `B` matrices as well. The resultant RGB 
 
 ---
 
-## Running 
-
-### Prerequisites
+## Prerequisites
 
 - Python3 ( https://www.python.org/downloads/ )
 
-- Python3 package dependencies ( can be installed using pip3 `pip3 install -r requirements.txt` )
+- Python3 package dependencies - Run `pip3 install -r requirements.txt` )
+
+## Running 
 
 
-Run the crypto_client script supplying neccessary parameters
+1. Using the crypto_client.py script supplying neccessary parameters
 ```
 # python3 crypto_client.py -h
 usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] [--alpha ALPHA] [--iter_max ITER_MAX] [--key KEY]
@@ -131,7 +127,7 @@ optional arguments:
                         output image name
 ```
 
-Using python package
+2. Using rubikencryptor python package
 ```
 from rubikencryptor.rubikencryptor import RubikCubeCrypto
 

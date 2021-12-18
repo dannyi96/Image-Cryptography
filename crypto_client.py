@@ -34,8 +34,8 @@ input_image = Image.open(args.image)
 rubixCrypto = RubikCubeCrypto(input_image)
 
 if args.type == "encrypt":
-    new_image = rubixCrypto.encrypt(alpha=args.alpha, iter_max=args.iter_max, key_filename=args.key)
-    new_image.save(args.output_image)
+    encrypted_image = rubixCrypto.encrypt(alpha=args.alpha, iter_max=args.iter_max, key_filename=args.key)
+    encrypted_image.save(args.output_image)
 else:
-    new_image = rubixCrypto.decrypt(key_filename=args.key)
-    new_image.save(args.output_image)
+    decrypted_image = rubixCrypto.decrypt(key_filename=args.key)
+    decrypted_image.save(args.output_image)
