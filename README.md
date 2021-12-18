@@ -99,8 +99,6 @@ R``` = $\left[\begin{array}{ccc}
 
 Same steps are followed for the `G` and `B` matrices as well. The resultant RGB matrices create the encrypted image.
 
----
-
 ## Prerequisites
 
 - Python3 ( https://www.python.org/downloads/ )
