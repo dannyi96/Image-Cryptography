@@ -112,7 +112,7 @@ Same steps are followed for the `G` and `B` matrices as well. The resultant RGB 
 
 1. Using the crypto_client.py script supplying neccessary parameters
 ```
-# python3 crypto_client.py -h
+$ python3 crypto_client.py -h
 usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] 
       [--alpha ALPHA] [--iter_max ITER_MAX] 
       [--key KEY] [--output_image OUTPUT_IMAGE]
