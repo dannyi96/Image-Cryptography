@@ -55,7 +55,6 @@ usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE]
       [--alpha ALPHA] [--iter_max ITER_MAX] 
       [--key KEY] [--output_image OUTPUT_IMAGE]
 
-optional arguments:
   -h, --help            show this help message and exit
   --type TYPE           <encrypt/decrypt>
   --image IMAGE         input image name
