@@ -105,7 +105,7 @@ Same steps are followed for the `G` and `B` matrices as well. The resultant RGB 
 
 - Python3 ( https://www.python.org/downloads/ )
 
-- Python3 package dependencies - Run `pip3 install -r requirements.txt` )
+- Python3 package dependencies - Run `pip3 install -r requirements.txt`
 
 ## Running 
 
@@ -113,8 +113,9 @@ Same steps are followed for the `G` and `B` matrices as well. The resultant RGB 
 1. Using the crypto_client.py script supplying neccessary parameters
 ```
 # python3 crypto_client.py -h
-usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] [--alpha ALPHA] [--iter_max ITER_MAX] [--key KEY]
-                        [--output_image OUTPUT_IMAGE]
+usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] 
+      [--alpha ALPHA] [--iter_max ITER_MAX] 
+      [--key KEY] [--output_image OUTPUT_IMAGE]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -122,7 +123,7 @@ optional arguments:
   --image IMAGE         input image name
   --alpha ALPHA         alpha value(in case of encryption)
   --iter_max ITER_MAX   max iterations value(in case of encryption)
-  --key KEY             key file name(to store key in case of encryption/ to use in case of decryption)
+  --key KEY             key file name
   --output_image OUTPUT_IMAGE
                         output image name
 ```
