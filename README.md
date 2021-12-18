@@ -41,65 +41,65 @@ Hyperparameters include
 
 ## Example 
 Input image has matrices `R`, `G` and `B` of size 3 X 3
+
 `α` is chosen as 10
+
 `ITER_MAX` is chosen as 1 (for purpose of this example)
 
-Let the matrix R be 
+Let the input RBG matrices be 
 
-R = $\left[\begin{array}{ccc}
-1 & 2 & 3\\
-4 & 5 & 6\\
-7 & 8 & 9\\
-\end{array}\right]$
+        [ 1 2 3 ]        [ 2 3 1 ]         [ 3 1 2 ]
+    R = [ 4 5 6 ]    G = [ 5 6 4 ]     B = [ 6 4 5 ]
+        [ 7 8 9 ]        [ 8 9 7 ]         [ 9 7 8 ]
 
 **Step 1: Vector creation**
-Vectors are created by randomly picking between 0 &  2<sup>10</sup>-1
-Vr = $\left[\begin{array}{ccc}
-605 & 371 & 646\\
-\end{array}\right]$
 
-Vc = $\left[\begin{array}{ccc}
-910 & 365 & 887\\
-\end{array}\right]$
+Vectors are created by randomly picking between 0 &  2<sup>10</sup>-1
+
+    Vr = [ 605 371 646 ]    Vc = [ 910 365 887 ]
 
 **Step 2: Rolling Rows**
 
 sum(row0) = 1+2+3 = 6 = even → shift row to the right 605(ie- Vr[0]) times
+
 sum(row1) = 4+5+6 = 15 = odd → shift row to the left 371(ie- Vr[1]) times
+
 sum(row2) = 7+8+9 = 24 = even → shift row to the right 646(ie- Vr[2]) times
 
 Hence the matrix now becomes
-R` = $\left[\begin{array}{ccc}
-2 & 3 & 1\\
-5 & 6 & 4\\
-9 & 7 & 8\\
-\end{array}\right]$
+
+         [ 2 3 1 ]
+    R` = [ 5 6 4 ]
+         [ 9 7 8 ]
 
 **Step 3: Rolling Columns**
 
 sum(col0) = 2+5+9 = 16 = even → shift column upwards 910(ie- Vc[0]) times
+
 sum(col1) = 3+6+7 = 16 = even → shift to the left 365(ie- Vc[1]) times
+
 sum(col2) = 1+4+8 = 13 = odd → shift to the right 887(ie- Vc[2]) times
 
 Hence the matrix now becomes
-R`` = $\left[\begin{array}{ccc}
-5 & 7 & 4\\
-9 & 3 & 8\\
-2 & 6 & 1\\
-\end{array}\right]$
+
+         [ 5 7 4 ]
+    R`` = [ 9 3 8 ]
+         [ 2 6 1 ]
 
 **Step 4: XORing Pixels**
+
 Every Row element is XORed as per the rule
+
 pixel(0,0) → pixel(0,0) ⊕ Vr[0] ⊕ rotate180(Vc[0]) = 5 ⊕ 605 ⊕ 455 = 927
+
 pixel(0,1) → pixel(0,1) ⊕ rotate180(Vr[0]) ⊕ Vc[1] = 7 ⊕ 745 ⊕ 365 = 899
 ...
 
 Hence the matrix now becomes
-R``` = $\left[\begin{array}{ccc}
-927 & 899 & 482\\
-756 & 243 & 524\\
-835 & 238 & 316\\
-\end{array}\right]$
+
+           [ 927 899 482 ]
+    R``` = [ 756 243 524 ]
+           [ 835 238 316 ]
 
 Same steps are followed for the `G` and `B` matrices as well. The resultant RGB matrices create the encrypted image.
 
