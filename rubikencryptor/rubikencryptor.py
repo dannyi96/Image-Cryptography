@@ -62,7 +62,7 @@ class RubikCubeCrypto:
 			self.iter_max = decoded_dict["iter_max"]
 
 
-	def roll_row(self, encrypt_flag: bool = True) -> np.array:
+	def roll_row(self, encrypt_flag: bool = True) -> None:
 		"""
 		Peform the Rolling Rows stage of Rubik Encryption/Decryption
 
@@ -87,7 +87,7 @@ class RubikCubeCrypto:
 											else np.roll(self.new_rgb_array[i,:,2], direction_multiplier * self.Kc[i])
 
 
-	def roll_column(self, encrypt_flag: bool = True) -> np.array:
+	def roll_column(self, encrypt_flag: bool = True) -> None:
 		"""
 		Peform the Shifting Columns stage of Rubik Encryption/Decryption
 
