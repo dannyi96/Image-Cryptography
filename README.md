@@ -131,6 +131,7 @@ optional arguments:
 2. Using rubikencryptor python package
 ```
 from rubikencryptor.rubikencryptor import RubikCubeCrypto
+from PIL import Image
 
 # Encrypt image
 input_image = Image.open('image1.png')
