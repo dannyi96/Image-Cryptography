@@ -54,15 +54,6 @@ $ python3 crypto_client.py -h
 usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] 
       [--alpha ALPHA] [--iter_max ITER_MAX] 
       [--key KEY] [--output_image OUTPUT_IMAGE]
-
-  -h, --help            show this help message and exit
-  --type TYPE           <encrypt/decrypt>
-  --image IMAGE         input image name
-  --alpha ALPHA         alpha value(in case of encryption)
-  --iter_max ITER_MAX   max iterations value(in case of encryption)
-  --key KEY             key file name
-  --output_image OUTPUT_IMAGE
-                        output image name
 ```
 
 2. Using rubikencryptor python package
