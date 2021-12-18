@@ -116,31 +116,34 @@ Same steps are followed for the `G` and `B` matrices as well. The resultant RGB 
 
 Run the crypto_client script supplying neccessary parameters
 ```
-# python crypto_client.py --help
-usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] [--output_image OUTPUT_IMAGE] [--Krfile KRFILE]
-                        [--Kcfile KCFILE]
+# python3 crypto_client.py -h
+usage: crypto_client.py [-h] [--type TYPE] [--image IMAGE] [--alpha ALPHA] [--iter_max ITER_MAX] [--key KEY]
+                        [--output_image OUTPUT_IMAGE]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --type TYPE           indicate whether to encrypt or decrypt image
-  --image IMAGE         indicate input image path
+  --type TYPE           <encrypt/decrypt>
+  --image IMAGE         input image name
+  --alpha ALPHA         alpha value(in case of encryption)
+  --iter_max ITER_MAX   max iterations value(in case of encryption)
+  --key KEY             key file name(to store key in case of encryption/ to use in case of decryption)
   --output_image OUTPUT_IMAGE
-                        indicate output image path
-  --Krfile KRFILE       indicate kr file path(in case of decryption)
-  --Kcfile KCFILE       indicate kc file path(in case of encryption)
+                        output image name
 ```
 
 Using python package
 ```
-import rubikencryptor
-input_image = 'test.png'
+from rubikencryptor.rubikencryptor import RubikCubeCrypto
 
 # Encrypt image
-encryptor = rubikencryptor.RubikCubeEncryptor(input_image)
-encryptor.encrypt(iter_max=10)
+input_image = Image.open('image1.png')
+encryptor = RubikCubeCrypto(input_image)
+encrypted_image = encryptor.encrypt(alpha=8, iter_max=10, key_filename='key.txt')
+encrypted_image.save('encrypted_image.png')
 
 # Decrypt image
-decryptor = rubikencryptor.RubikCubeEncryptor(input_image)
-decryptor.decrypt(Krfile,Kcfile,10)
+decryptor = RubikCubeCrypto(encrypted_image)
+decrypted_image = decryptor.decrypt(key_filename='key.txt')
+decrypted_image.save('decrypted_image.png')
 ```
     

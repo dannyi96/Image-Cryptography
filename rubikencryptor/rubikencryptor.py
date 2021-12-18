@@ -111,14 +111,9 @@ class RubikCubeCrypto:
 											else np.roll(self.new_rgb_array[:,i,2], direction_multiplier * self.Kc[i])
 
 
-	def xor_pixels(self, encrypt_flag: bool = True) -> None:
+	def xor_pixels(self) -> None:
 		"""
 		Peform the XOR Cells stage of Rubik Encryption/Decryption
-
-		Parameters
-		----------
-		encrypt_flag : boolean
-			flag indicating whether to perform encryption or decryption
 		"""
 		# For each pixel
 		for i in range(self.m):
@@ -165,7 +160,7 @@ class RubikCubeCrypto:
 		for _ in range(iter_max):
 			self.roll_row(encrypt_flag = True)
 			self.roll_column(encrypt_flag = True)
-			self.xor_pixels(encrypt_flag = True)
+			self.xor_pixels()
 
 		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
 		return new_image
@@ -184,19 +179,10 @@ class RubikCubeCrypto:
 		"""
 		self.load_key(key_filename)
 		for _ in range(self.iter_max):
-			self.xor_pixels(encrypt_flag = False)
+			self.xor_pixels()
 			self.roll_column(encrypt_flag = False)
 			self.roll_row(encrypt_flag = False)
 
 		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
 		return new_image
 
-if __name__ == '__main__':
-	input_image = Image.open('input/pic1.png')
-	encryptor = RubikCubeCrypto(input_image)
-	encryped_image = encryptor.encrypt(alpha = 8, iter_max = 20, key_filename = 'encoded_key.txt')
-	encryped_image.save("ENC1.png")
-	
-	decryptor = RubikCubeCrypto(encryped_image)
-	decryped_image = decryptor.decrypt(key_filename='encoded_key.txt')
-	decryped_image.save('DEC1.png')
