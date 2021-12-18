@@ -72,4 +72,12 @@ decryptor = RubikCubeCrypto(encrypted_image)
 decrypted_image = decryptor.decrypt(key_filename='key.txt')
 decrypted_image.save('decrypted_image.png')
 ```
-    
+
+Once encryption is run, the original image is encrypted & a key file is generated
+Original Image - 
+![](https://github.com/danny311296/Image-Cryptography/blob/master/example/original.png)
+Encrypted Image - 
+![](https://github.com/danny311296/Image-Cryptography/blob/master/input/encrypted.png)
+
+Decryption can be done using the Encrypted Image & the key file to get back the original image
+![](https://github.com/danny311296/Image-Cryptography/blob/master/input/decrypted.png)
