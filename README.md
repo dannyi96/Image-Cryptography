@@ -73,14 +73,15 @@ decrypted_image = decryptor.decrypt(key_filename='key.txt')
 decrypted_image.save('decrypted_image.png')
 ```
 
-### Example -
+## Example -
 
-Original Image - 
+Original Image
+
 ![](https://github.com/dannyi96/Image-Cryptography/blob/master/example/original.png)
 
 Run Encryption on the Original Image
 ```
-# python3 crypto_client.py --type encrypt
+$ python3 crypto_client.py --type encrypt
     --image example/original.png 
     --output_image example/encrypted.png 
     --key example/encoded_key.txt 
@@ -89,14 +90,14 @@ Run Encryption on the Original Image
 
 encrypted image is stored at `example/encrypted.png ` & key is stored at `example/encoded_key.txt `
 
-Encrypted Image - 
+Encrypted Image
 
 ![](https://github.com/dannyi96/Image-Cryptography/blob/master/example/encrypted.png)
 
 Run Decryption on the Encryped Image using the Key
 
 ```
-# python3 crypto_client.py --type decrypt  
+$ python3 crypto_client.py --type decrypt  
     --image example/encrypted.png 
     --output_image example/decrypted.png 
     --key example/encoded_key.txt
