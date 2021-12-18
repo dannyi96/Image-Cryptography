@@ -9,11 +9,8 @@ class RubikCubeCrypto:
 	def __init__(self, image: Image) -> None:
 		self.image = image.convert('RGB')
 		self.rgb_array = np.array(self.image)
-
-		self.r_array, self.g_array, self.b_array = self.rgb_array[:,:,0], self.rgb_array[:,:,1], self.rgb_array[:,:,2]
+		self.new_rgb_array = np.copy(self.rgb_array)
 		self.m, self.n = self.rgb_array.shape[0], self.rgb_array.shape[1]
-
-		self.new_r_array, self.new_g_array, self.new_b_array = np.copy(self.r_array), np.copy(self.g_array), np.copy(self.b_array)  
 
 
 	def create_key(self, alpha: float, iter_max: int, key_filename: str ='key.txt') -> None:
@@ -76,21 +73,19 @@ class RubikCubeCrypto:
 		"""
 		direction_multiplier = 1 if encrypt_flag else -1
   
-		# For each row of the transpose matrices
+		# For each row of the matrices
 		for i in range(self.m):
-			rModulus = sum(self.r_array[i]) % 2
-			gModulus = sum(self.g_array[i]) % 2
-			bModulus = sum(self.b_array[i]) % 2
-			
-			self.new_r_array[i] = np.roll(self.new_r_array[i],direction_multiplier * -self.Kc[i]) if(rModulus==0) else np.roll(self.new_r_array[i], direction_multiplier * self.Kc[i])
-			self.new_g_array[i] = np.roll(self.new_g_array[i],direction_multiplier * -self.Kc[i]) if(gModulus==0) else np.roll(self.new_g_array[i], direction_multiplier * self.Kc[i])
-			self.new_b_array[i] = np.roll(self.new_b_array[i],direction_multiplier * -self.Kc[i]) if(bModulus==0) else np.roll(self.new_b_array[i], direction_multiplier * self.Kc[i])
+			rModulus = np.sum(self.new_rgb_array[i,:,0]) % 2
+			gModulus = np.sum(self.new_rgb_array[i,:,1]) % 2
+			bModulus = np.sum(self.new_rgb_array[i,:,2]) % 2
+			   
+			self.new_rgb_array[i,:,0] = np.roll(self.new_rgb_array[i,:,0], direction_multiplier * -self.Kc[i]) if(rModulus==0) \
+											else np.roll(self.new_rgb_array[i,:,0], direction_multiplier * self.Kc[i])
+			self.new_rgb_array[i,:,1] = np.roll(self.new_rgb_array[i,:,1], direction_multiplier * -self.Kc[i]) if(gModulus==0) \
+											else np.roll(self.new_rgb_array[i,:,1], direction_multiplier * self.Kc[i])
+			self.new_rgb_array[i,:,2] = np.roll(self.new_rgb_array[i,:,2], direction_multiplier * -self.Kc[i]) if(bModulus==0) \
+											else np.roll(self.new_rgb_array[i,:,2], direction_multiplier * self.Kc[i])
 
-		# if np.sum(self.rgb_array[:,:,0]) == 0:
-		# 	self.rgb_array[:,:,0] = np.roll(self.rgb_array[:,:,0], direction_multiplier * self.Kr[i])
-		# else:
-		# 	self.rgb_array[:,:,0] = np.roll(self.rgb_array[:,:,0], direction_multiplier * self.Kr[i])
-			
 
 	def roll_column(self, encrypt_flag: bool = True) -> np.array:
 		"""
@@ -104,14 +99,17 @@ class RubikCubeCrypto:
 		direction_multiplier = 1 if encrypt_flag else -1
 
 		for i in range(self.n):
-			rModulus = sum(self.new_r_array[:,i]) % 2
-			gModulus = sum(self.new_g_array[:,i]) % 2
-			bModulus = sum(self.new_b_array[:,i]) % 2
-			
-			self.new_r_array[:,i] = np.roll(self.new_r_array[:,i],direction_multiplier * -self.Kc[i]) if(rModulus==0) else np.roll(self.new_r_array[:,i], direction_multiplier * self.Kc[i])
-			self.new_g_array[:,i] = np.roll(self.new_g_array[:,i],direction_multiplier * -self.Kc[i]) if(gModulus==0) else np.roll(self.new_g_array[:,i], direction_multiplier * self.Kc[i])
-			self.new_b_array[:,i] = np.roll(self.new_b_array[:,i],direction_multiplier * -self.Kc[i]) if(bModulus==0) else np.roll(self.new_b_array[:,i], direction_multiplier * self.Kc[i])
-  
+			rModulus = np.sum(self.new_rgb_array[:,i,0]) % 2
+			gModulus = np.sum(self.new_rgb_array[:,i,1]) % 2
+			bModulus = np.sum(self.new_rgb_array[:,i,2]) % 2
+
+			self.new_rgb_array[:,i,0] = np.roll(self.new_rgb_array[:,i,0], direction_multiplier * -self.Kc[i]) if(rModulus==0) \
+											else np.roll(self.new_rgb_array[:,i,0], direction_multiplier * self.Kc[i])
+			self.new_rgb_array[:,i,1] = np.roll(self.new_rgb_array[:,i,1], direction_multiplier * -self.Kc[i]) if(gModulus==0) \
+											else np.roll(self.new_rgb_array[:,i,1], direction_multiplier * self.Kc[i])
+			self.new_rgb_array[:,i,2] = np.roll(self.new_rgb_array[:,i,2], direction_multiplier * -self.Kc[i]) if(bModulus==0) \
+											else np.roll(self.new_rgb_array[:,i,2], direction_multiplier * self.Kc[i])
+
 
 	def xor_pixels(self, encrypt_flag: bool = True) -> None:
 		"""
@@ -127,9 +125,9 @@ class RubikCubeCrypto:
 			for j in range(self.n):
 				xor_operand_1 = self.Kc[j] if i%2==1 else self.rotate180(self.Kc[j])
 				xor_operand_2 = self.Kr[i] if j%2==0 else self.rotate180(self.Kr[i])
-				self.new_r_array[i][j] = self.new_r_array[i][j] ^ xor_operand_1 ^ xor_operand_2
-				self.new_g_array[i][j] = self.new_g_array[i][j] ^ xor_operand_1 ^ xor_operand_2
-				self.new_b_array[i][j] = self.new_b_array[i][j] ^ xor_operand_1 ^ xor_operand_2
+				self.new_rgb_array[i,j,0] = self.new_rgb_array[i,j,0] ^ xor_operand_1 ^ xor_operand_2
+				self.new_rgb_array[i,j,1] = self.new_rgb_array[i,j,1] ^ xor_operand_1 ^ xor_operand_2
+				self.new_rgb_array[i,j,2] = self.new_rgb_array[i,j,2] ^ xor_operand_1 ^ xor_operand_2
 
 
 	def rotate180(self, n: int) -> int:
@@ -166,11 +164,10 @@ class RubikCubeCrypto:
 			self.roll_row(encrypt_flag = True)
 			self.roll_column(encrypt_flag = True)
 			self.xor_pixels(encrypt_flag = True)
-		for i in range(self.m):
-			for j in range(self.n):
-				self.pixels[i,j] = (self.r[i][j], self.g[i][j], self.b[i][j])
-		new_rgb_array = 
-		return Image.fromarray(new_rgb_array)
+
+		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
+		new_image.save(output_image)
+		return new_image
 
   
 	def decrypt(self, key_filename: str, output_image: str = 'decrypted_output.png') -> Image:
@@ -186,23 +183,19 @@ class RubikCubeCrypto:
 		iter_max: int
 			Maximum number of iterations to perform
 		"""
-		new_rgb_array = np.array([])
 		self.load_key(key_filename)
 		for _ in range(self.iter_max):
 			self.xor_pixels(encrypt_flag = False)
 			self.roll_column(encrypt_flag = False)
 			self.roll_row(encrypt_flag = False)
 
-		for i in range(self.m):
-			for j in range(self.n):
-				self.pixels[i,j] = (self.r[i][j], self.g[i][j], self.b[i][j])
-
-		self.image.save(output_image)
-		return Image.fromarray(new_rgb_array)
-		# Image.fromarray(ndarray)
+		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
+		new_image.save(output_image)
+		return new_image
 
 if __name__ == '__main__':
-    encryptor = RubikCubeCrypto(Image.open('input/pic1.png'))
-    print(encryptor.rgb_array.shape)
-    print(encryptor.rgb_array)
-    print(encryptor.rgb_array[0].shape)
+	encryptor = RubikCubeCrypto(Image.open('input/pic1.png'))
+	encryptor.encrypt()
+ 
+	decryptor = RubikCubeCrypto(Image.open('encrypted_output.png'))
+	decryptor.decrypt(key_filename='key.txt')
