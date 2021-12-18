@@ -88,7 +88,7 @@ $ python3 crypto_client.py --type encrypt
     --alpha 8 --iter_max 10
 ```
 
-encrypted image is stored at `example/encrypted.png ` & key is stored at `example/encoded_key.txt `
+encrypted image is stored at `example/encrypted.png` & key is stored at `example/encoded_key.txt `
 
 Encrypted Image
 
@@ -102,6 +102,8 @@ $ python3 crypto_client.py --type decrypt
     --output_image example/decrypted.png 
     --key example/encoded_key.txt
 ```
+
+decrypted image is stored at `example/decrypted.png` 
 
 Decrypted Image -
 
