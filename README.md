@@ -11,23 +11,15 @@ Hyperparameters include
 
 #### A. Encyption
 1. Create two vectors `Kr` and `Kc` with `|Kr|=M` & `|Kc|=N`. The values of these vectors are randomly picked from 0 to 2<sup>α </sup>-1
-2.  Repeat steps 3 to 5 `ITER_MAX` number of times
-3. **Rolling Rows:** 
-The sum of all pixel values of every row of the image RGB matrices are calculated one by one
-if the sum of a given row `rowNumber` is even,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll the row to the right `Kr[rowNumber]` times
-and if the sum is odd
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Roll the row to the left `Kr[rowNumber]` times
-1. **Rolling Columns:** 
-The sum of all pixel values of every column of the image RGB matrices are calculated one by one
-if the sum of a given row `columnNumber` is even,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; roll the column up `Kc[columnNumber]` times
-and if the sum is odd
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; roll the column down `Kc[columnNumber]` times
-1. **XORing Pixels:**
+2.  Repeat below steps `ITER_MAX` number of times
+i. **Rolling Rows:** 
+The sum of all pixel values of every row of the image RGB matrices are calculated one by one. If the sum of a given row `rowNumber` is even, Roll the row to the right `Kr[rowNumber]` times else roll to the left `Kr[rowNumber]` times
+ii. **Rolling Columns:** 
+The sum of all pixel values of every column of the image RGB matrices are calculated one by one. If the sum of a given row `columnNumber` is even, roll the column up `Kc[columnNumber]` times else, roll the column down `Kc[columnNumber]` times
+iii. **XORing Pixels:**
 For every pixel(i,j), XOR the pixel with the below two values
-I. `Kc[columnNumber]` if `i` is odd else 180 rotated bit version of `Kc[columnNumber]`
-II. `Kr[rowNumber]` if `j` is even else 180 rotated bit version of `Kr[rowNumber]`
+Value #1 - `Kc[columnNumber]` if `i` is odd else 180 rotated bit version of `Kc[columnNumber]`
+Value #2 - `Kr[rowNumber]` if `j` is even else 180 rotated bit version of `Kr[rowNumber]`
 
 
 #### B. Decryption
@@ -98,6 +90,7 @@ R``` = $\left[\begin{array}{ccc}
 \end{array}\right]$
 
 Same steps are followed for the `G` and `B` matrices as well. The resultant RGB matrices create the encrypted image.
+
 
 ## Prerequisites
 
