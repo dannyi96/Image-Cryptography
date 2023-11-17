@@ -13,7 +13,7 @@ class RubikCubeCrypto:
 		self.m, self.n = self.rgb_array.shape[0], self.rgb_array.shape[1]
 
 
-	def create_key(self, alpha: float, iter_max: int, key_filename: str ='key.txt') -> None:
+	def create_key(self, alpha: float, iter_max: int) -> None:
 		"""
 		Create the two vectors using the value alpha
 			- Vector Kr - M elements randomnly picked b/w 0 and 2^alpha - 1
@@ -25,8 +25,6 @@ class RubikCubeCrypto:
 			hyperparameter alpha which is used in generarting the two vectors
 		iter_max : int
 			Maximum number of iterations to perform
-		key_filename : str
-			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
 		"""
 		self.Kr = [randint(0,pow(2,alpha)-1) for i in range(self.m)]
 		self.Kc = [randint(0,pow(2,alpha)-1) for i in range(self.n)]
@@ -39,12 +37,43 @@ class RubikCubeCrypto:
 					}
 
 		serialized_key_dict = json.dumps(key_dict)
-		encoded_key = base64.b64encode(serialized_key_dict.encode())
-		with open(key_filename, "wb") as binary_file:
-			binary_file.write(encoded_key)
+		self.encoded_key = base64.b64encode(serialized_key_dict.encode())
 		
+	def create_key_file(self, alpha: float, iter_max: int, key_filename: str) -> None:
+		"""
+		Saves the genered key file in the provided file_name
 
-	def load_key(self, key_filename: str) -> None:
+		Parameters
+		----------
+		alpha : 
+			hyperparameter alpha which is used in generarting the two vectors
+		iter_max : int
+			Maximum number of iterations to perform
+		key_filename : str
+			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
+		"""
+		self.create_key(alpha, iter_max)
+		with open(key_filename, "wb") as binary_file:
+			binary_file.write(self.encoded_key)
+			
+
+	def load_key(self, encoded_key: bytes) -> None:
+		"""
+		Load the two vectors Kr, Kc and the iter_max from the encoded_key provided
+
+		Parameters
+		----------
+		encoded_key : bytes
+			Key File generated from encryption
+		"""
+		decoded_key = base64.b64decode(encoded_key).decode()
+		decoded_dict = json.loads(decoded_key)
+		self.Kr = decoded_dict["Kr"]
+		self.Kc = decoded_dict["Kc"]
+		self.iter_max = decoded_dict["iter_max"]
+
+
+	def load_key_file(self, key_filename: str) -> None:
 		"""
 		Load the two vectors Kr, Kc and the iter_max from the key file provided
 
@@ -54,12 +83,8 @@ class RubikCubeCrypto:
 			Key File generated from encryption
 		"""
 		with open(key_filename, 'r') as keyfile:
-			data = keyfile.read()
-			decoded_key = base64.b64decode(data).decode()
-			decoded_dict = json.loads(decoded_key)
-			self.Kr = decoded_dict["Kr"]
-			self.Kc = decoded_dict["Kc"]
-			self.iter_max = decoded_dict["iter_max"]
+			encoded_key = keyfile.read()
+			self.load_key(encoded_key)
 
 
 	def roll_row(self, encrypt_flag: bool = True) -> None:
@@ -156,7 +181,7 @@ class RubikCubeCrypto:
    		key_filename : str
 			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
 		"""
-		self.create_key(alpha, iter_max, key_filename)
+		self.create_key_file(alpha, iter_max, key_filename)
 		for _ in range(iter_max):
 			self.roll_row(encrypt_flag = True)
 			self.roll_column(encrypt_flag = True)
@@ -177,7 +202,7 @@ class RubikCubeCrypto:
 		iter_max: int
 			Maximum number of iterations to perform
 		"""
-		self.load_key(key_filename)
+		self.load_key_file(key_filename)
 		for _ in range(self.iter_max):
 			self.xor_pixels()
 			self.roll_column(encrypt_flag = False)
