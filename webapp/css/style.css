@@ -1,0 +1,14 @@
+h1 {
+    color: red;
+}
+
+.crypto-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.crypto-container > div {
+    width: 200px;
+    height: 200px;
+    color: red;
+}
