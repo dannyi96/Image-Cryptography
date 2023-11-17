@@ -17,14 +17,12 @@
         </div>
 
         <!-- Nav bar for encryption & decryption -->
-        <div class="container heading">
-            <a href="#"><h1>Encryption</h1></a>
-            <a href="#"><h1>Decryption</h1></a>
+        <div class="container navbar">
+            <a onclick="toggleState('encryption', 'decryption')"><h1>Encryption</h1></a>
+            <a onclick="toggleState('decryption', 'encryption')"><h1>Decryption</h1></a>
         </div>
 
-        <hr/>
-
-        <div class="encryption">
+        <div id="encryption">
             <h2> Encryption </h2>
             <div class="container">
                 <div class="container-item">
@@ -33,34 +31,33 @@
                     <input type="file" id="image" accept="image/*" 
                         onchange="previewImage(event, 'container-item', 'input-image')">
                 </div>
-                <button id="transform-image"> Encrypt </button>
+                <button id="encrypt-image"> Encrypt </button>
                 <div class="container-item">
                     <h2>Output Image</h2>
                     <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
                     <button onclick="downloadImage('output-image', 'modified.png')"> Download Image </button>
                     <button onclick="downloadKey('encoded-key', 'key.txt')"> Download Key </button>
-                    <div style="display: none;" id="encoded-key"></div>
+                    <div style="display: none;" id="encrypt-encoded-key"></div>
                 </div>
             </div>
         </div>
 
         <hr/>
         
-        <div class="decryption" style="display: none;">
+        <div id="decryption" style="display: none;">
             <h2> Decryption </h2>
             <div class="container">
                 <div class="container-item">
                     <h2>Input Image</h2>
                     <img id="decrypt-input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
-                    <input type="file" id="image" accept="image/*" onchange="previewImage(event, 'decrypt-image-container', 'decrypt-input-image')""> Upload Image
-                    <input type="file" id="image" accept="image/*" 
-                        onchange="previewImage(event, 'image-container', 'input-image')"> Upload Key
-                    <div style="display: none;" id="decrypt-encoded-key"></div>
+                    <input type="file" id="image" accept="image/*" onchange="previewImage(event, 'decrypt-image-container', 'decrypt-input-image')"> Upload Image
+                    <input type="file" id="decrypt-encoded-key" accept=".txt" onchange="previewText(event, 'decrypt-encoded-key-contents')"> Upload Key
+                    <div style="display: none;" id="decrypt-encoded-key-contents"></div>
                 </div>
-                <button id="transform-image"> Decrypt </button>
+                <button id="decrypt-image"> Decrypt </button>
                 <div class="container-item">
                     <h2>Output Image</h2>
-                    <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
+                    <img id="decrypt-output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
                 </div>
             </div>
         </div>

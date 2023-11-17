@@ -8,6 +8,10 @@ body {
     border: 1px solid black;
 }
 
+.navbar {
+    border-bottom: 1px solid black;
+}
+
 hr {
     margin: 0;
 }
