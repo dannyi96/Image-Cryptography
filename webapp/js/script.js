@@ -24,7 +24,7 @@ function downloadImage(imgId, fileName) {
     var new_anchor = document.createElement("a")
     document.body.appendChild(new_anchor);
     new_anchor.download = fileName;
-    new_anchor.href = imgId.src;
+    new_anchor.href = document.getElementById(imgId).src;
     // click the anchor to trigger download
     new_anchor.click();
     new_anchor.remove();
