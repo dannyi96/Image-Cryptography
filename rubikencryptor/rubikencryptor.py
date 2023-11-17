@@ -181,7 +181,7 @@ class RubikCubeCrypto:
    		key_filename : str
 			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
 		"""
-		self.create_key(alpha, iter_max, key_filename)
+		self.create_key_file(alpha, iter_max, key_filename)
 		for _ in range(iter_max):
 			self.roll_row(encrypt_flag = True)
 			self.roll_column(encrypt_flag = True)
