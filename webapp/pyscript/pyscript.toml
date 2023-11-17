@@ -1,3 +1,3 @@
 packages = [
-    "rubikencryptor",
+    "rubikencryptor>=1.0.5",
 ]

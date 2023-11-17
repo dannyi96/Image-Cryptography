@@ -4,6 +4,7 @@ from io import BytesIO
 import base64
 from pyscript import when, display, document
 
+
 @when("click", "#encrypt-image")
 def click_handler(event):
     image_prefix, image_data = document.getElementById('input-image').src.split('base64,')
@@ -18,16 +19,6 @@ def click_handler(event):
     document.getElementById('output-image').src = image_prefix + 'base64,' + encoded_image
     document.getElementById('encoded-key').innerText = encryptor.encoded_key
 
-# @when('change', '#decrypt-encoded-key')
-# def change_handler(event):
-#     fileList = event.target.files
-#     if fileList:
-#         file = fileList[0]
-#         #reader = pyodide.new_object('FileReader')
-#         #pyodide.call_method(reader, 'readAsDataURL', file)
-#     else:
-#         print('python')
-#     print(f'len = {len(fileList)}')
 
 @when("click", "#decrypt-image")
 def click_handler(event):
@@ -35,8 +26,8 @@ def click_handler(event):
     image_bytes = base64.b64decode(image_data)
     input_image = Image.open(BytesIO(image_bytes))
     encryptor = RubikCubeCrypto(input_image)
-    keyElem = document.getElementById('decrypt-encoded-key')
-    encrypted_image = encryptor.decrypt(key_filename='a')
+    keyElem = document.getElementById('decrypt-encoded-key-contents').textContent
+    encrypted_image = encryptor.decrypt_with_key(keyElem)
     output_buffer = BytesIO()
     encrypted_image.save(output_buffer, format=input_image.format)
     image_bytes = output_buffer.getvalue()

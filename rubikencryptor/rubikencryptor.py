@@ -191,6 +191,25 @@ class RubikCubeCrypto:
 		return new_image
 
   
+	def decrypt_with_key(self, encoded_key: bytes) -> Image:
+		"""
+		Peform decryption of the input image
+
+		Parameters
+		----------
+		encoded_key : bytes
+			Key File generated from encryption
+		"""
+		self.load_key(encoded_key)
+		for _ in range(self.iter_max):
+			self.xor_pixels()
+			self.roll_column(encrypt_flag = False)
+			self.roll_row(encrypt_flag = False)
+
+		new_image = Image.fromarray(self.new_rgb_array.astype(np.uint8))
+		return new_image
+
+
 	def decrypt(self, key_filename: str) -> Image:
 		"""
 		Peform decryption of the input image
