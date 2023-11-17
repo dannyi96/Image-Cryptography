@@ -52,7 +52,7 @@ class RubikCubeCrypto:
 		key_filename : str
 			Filename to store the encryption key ( contains the two generated vectors Kr, Kc & the iter_max )
 		"""
-		self.create_key(alpha, iter_max, key_filename)
+		self.create_key(alpha, iter_max)
 		with open(key_filename, "wb") as binary_file:
 			binary_file.write(self.encoded_key)
 			
@@ -202,7 +202,7 @@ class RubikCubeCrypto:
 		iter_max: int
 			Maximum number of iterations to perform
 		"""
-		self.load_key(key_filename)
+		self.load_key_file(key_filename)
 		for _ in range(self.iter_max):
 			self.xor_pixels()
 			self.roll_column(encrypt_flag = False)
