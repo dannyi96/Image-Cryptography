@@ -25,8 +25,9 @@
             <div class="image-container">
                 <h2>Output Image</h2>
                 <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
-                <a href="./assets/imgs/placeholder.png" download> Download Image </a>
-                <button> Download Key </button>
+                <button onclick="downloadImage('output-image', 'modified.png')"> Download Image </button>
+                <button onclick="downloadKey('encoded-key', 'key.txt')"> Download Key </button>
+                <div style="display: none;" id="encoded-key"></div>
             </div>
         </div>
         <script src="./js/script.js"></script>

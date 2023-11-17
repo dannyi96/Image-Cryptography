@@ -23,3 +23,5 @@ def click_handler(event):
     encoded_image = base64.b64encode(image_bytes).decode('utf-8')
     print(encoded_image)
     document.getElementById('output-image').src = image_prefix + 'base64,' + encoded_image
+    document.getElementById('encoded-key').innerText = encryptor.encoded_key
+    
