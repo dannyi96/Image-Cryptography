@@ -3,7 +3,7 @@ body {
     margin-top: 1px;
 }
 
-.heading-container {
+.heading {
     background-color: rgb(241, 242, 243);
     border: 1px solid black;
 }
@@ -20,14 +20,14 @@ h1, h2 {
     text-align: center;
 }
 
-.crypto-container, .decrypt-crypto-container {
+.container, .crypto-container, .decrypt-crypto-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 
-.image-container, .decrypt-image-container {
+.container-item, .image-container, .decrypt-image-container {
     display: flex;
     flex-direction: column;
     align-items: center;
