@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="rubikencryptor",
-    version="1.0.7",
+    version="1.0.8",
     author="Daniel Isaac",
     author_email="danielbcbs2@gmail.com",
     description="Image Cryptography Based on Rubix's Cube Principle",
