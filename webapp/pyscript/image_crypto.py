@@ -14,6 +14,7 @@ def click_handler(event):
     encryptor = RubikCubeCrypto(input_image)
     print('HERE')
     encrypted_image = encryptor.encrypt(alpha=8, iter_max=1, key_filename='key.txt')
+    print(encryptor.encoded_key)
     print('HERE 2')
     print('HERE 3')
     output_buffer = BytesIO()
