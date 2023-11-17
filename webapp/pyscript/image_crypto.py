@@ -17,7 +17,7 @@ def click_handler(event):
     image_bytes = output_buffer.getvalue()
     encoded_image = base64.b64encode(image_bytes).decode('utf-8')
     document.getElementById('output-image').src = image_prefix + 'base64,' + encoded_image
-    document.getElementById('encoded-key').innerText = encryptor.encoded_key
+    document.getElementById('encrypt-encoded-key').innerText = encryptor.encoded_key
 
 
 @when("click", "#decrypt-image")
