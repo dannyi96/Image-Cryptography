@@ -13,7 +13,7 @@ class RubikCubeCrypto:
 		self.m, self.n = self.rgb_array.shape[0], self.rgb_array.shape[1]
 
 
-	def create_key(self, alpha: float, iter_max: int) -> bytes:
+	def create_key(self, alpha: float, iter_max: int) -> None:
 		"""
 		Create the two vectors using the value alpha
 			- Vector Kr - M elements randomnly picked b/w 0 and 2^alpha - 1
