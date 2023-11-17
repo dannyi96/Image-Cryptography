@@ -17,14 +17,12 @@
                 <img id="input-image" src="./assets/imgs/placeholder.png" alt="Uploaded Image" width="300px" height="300px">
                 <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
             </div>
-            <button pys-onClick="lol"> Encrypt </button>
+            <button id="transform-image"> Encrypt </button>
             <div class="image-container">
                 Output Image
                 <img id="output-image" src="./assets/imgs/placeholder.png" alt="Uploaded Image" width="300px" height="300px">
             </div>
         </div>
-        <button id="my_button">Click me!</button>
-
         <script src="./js/script.js"></script>
 
         <!-- <py-config>
@@ -35,14 +33,16 @@
             ]
         </py-config> -->
         <py-script>
-            from pyscript import when, display
-            @when("click", "#my_button")
+            import sys
+            sys.path.append('..')
+            <!-- from rubikencryptor.rubikencryptor import RubikCubeCrypto -->
+            <!-- from PIL import Image -->
+
+            <!-- rubixCrypto = RubikCubeCrypto(input_image) -->
+            from pyscript import when, display, document
+            @when("click", "#transform-image")
             def click_handler(event):
-                """
-                Event handlers get an event object representing the activity that raised
-                them.
-                """
-                display("I've been clicked!")
+                document.getElementById('output-image').src = document.getElementById('input-image').src
         </py-script>
 
     </body>
