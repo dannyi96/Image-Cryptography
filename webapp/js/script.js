@@ -1,7 +1,7 @@
 function previewImage(event) {
     const input = event.target;
     const container = document.getElementById('image-container');
-    const image = document.getElementById('uploaded-image');
+    const image = document.getElementById('input-image');
 
     const file = input.files[0];
 
@@ -18,4 +18,8 @@ function previewImage(event) {
     } else {
         container.style.display = 'none';
     }
+}
+
+function encryptImage(event) {
+
 }

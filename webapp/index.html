@@ -13,13 +13,14 @@
         <hr/>
         <div class="crypto-container">
             <div class="image-container">
-                IMAGE 1
-                <img id="uploaded-image" src="./assets/imgs/placeholder.png" alt="Uploaded Image" width="300px" height="300px">
+                Input Image
+                <img id="input-image" src="./assets/imgs/placeholder.png" alt="Uploaded Image" width="300px" height="300px">
                 <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
             </div>
+            <button onchange="encryptImage(event)"> Encrypt </button>
             <div class="image-container">
-                IMAGE 2
-                <img id="uploaded-image" src="./assets/imgs/placeholder.png" alt="Uploaded Image" width="300px" height="300px">
+                Output Image
+                <img id="output-image" src="./assets/imgs/placeholder.png" alt="Uploaded Image" width="300px" height="300px">
             </div>
         </div>
         <script src="./js/script.js"></script>
