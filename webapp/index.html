@@ -9,17 +9,26 @@
         <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
     </head>
     <body>
+        <!-- Header section -->
         <div class="heading-container">
             <img src="./assets/icons/rubik.ico" width="50px" height="50px"/>
             <h1>Rubik's Principle based Image Cryptography</h1>
             <img src="./assets/icons/rubik.ico" width="50px" height="50px"/>
         </div>
-        <hr/>
+
+        <!-- Nav bar for encryption & decryption -->
+        <div class="heading-container">
+            <a href="#"><h1>Encryption</h1></a>
+            <a href="#"><h1>Decryption</h1></a>
+        </div>
+
+        <h2> Encryption </h2>
         <div class="crypto-container">
             <div class="image-container">
                 <h2>Input Image</h2>
                 <img id="input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
-                <input type="file" id="image" accept="image/*" onchange="previewImage(event)">
+                <input type="file" id="image" accept="image/*" 
+                    onchange="previewImage(event, 'image-container', 'input-image')">
             </div>
             <button id="transform-image"> Encrypt </button>
             <div class="image-container">
@@ -30,6 +39,28 @@
                 <div style="display: none;" id="encoded-key"></div>
             </div>
         </div>
+
+        <hr/>
+
+        <h2> Decryption </h2>
+        <div class="decrypt-crypto-container">
+            <div class="decrypt-image-container">
+                <h2>Input Image</h2>
+                <img id="decrypt-input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
+                <input type="file" id="image" accept="image/*" onchange="previewImage(event, 'decrypt-image-container', 'decrypt-input-image')""> Upload Image
+                <input type="file" id="image" accept="image/*" 
+                    onchange="previewImage(event, 'image-container', 'input-image')"> Upload Key
+                <div style="display: none;" id="decrypt-encoded-key"></div>
+            </div>
+            <button id="transform-image"> Decrypt </button>
+            <div class="decrypt-image-container">
+                <h2>Output Image</h2>
+                <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
+            </div>
+        </div>
+
+        <hr/>
+
         <script src="./js/script.js"></script>
         <script type="py" src="./pyscript/image_crypto.py" config="./pyscript/pyscript.toml"></script>
     </body>

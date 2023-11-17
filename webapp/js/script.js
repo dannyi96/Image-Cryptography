@@ -1,7 +1,7 @@
-function previewImage(event) {
+function previewImage(event, imageContainerId, imageId) {
     const input = event.target;
-    const container = document.getElementById('image-container');
-    const image = document.getElementById('input-image');
+    const container = document.getElementById(imageContainerId);
+    const image = document.getElementById(imageId);
 
     const file = input.files[0];
 
