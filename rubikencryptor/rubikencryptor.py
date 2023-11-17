@@ -82,7 +82,7 @@ class RubikCubeCrypto:
 		key_filename : str
 			Key File generated from encryption
 		"""
-		with open(key_filename, 'r') as keyfile:
+		with open(key_filename, 'rb') as keyfile:
 			encoded_key = keyfile.read()
 			self.load_key(encoded_key)
 
