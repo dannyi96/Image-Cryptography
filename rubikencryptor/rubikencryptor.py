@@ -66,7 +66,7 @@ class RubikCubeCrypto:
 		encoded_key : bytes
 			Key File generated from encryption
 		"""
-		decoded_key = base64.b64decode(encoded_key.encode()).decode()
+		decoded_key = base64.b64decode(encoded_key).decode()
 		decoded_dict = json.loads(decoded_key)
 		self.Kr = decoded_dict["Kr"]
 		self.Kc = decoded_dict["Kc"]
