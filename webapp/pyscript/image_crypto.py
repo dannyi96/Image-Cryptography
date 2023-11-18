@@ -26,7 +26,7 @@ def click_handler(event):
     image_bytes = base64.b64decode(image_data)
     input_image = Image.open(BytesIO(image_bytes))
     encryptor = RubikCubeCrypto(input_image)
-    keyElem = document.getElementById('decrypt-encoded-key-contents').textContent
+    keyElem = eval(document.getElementById('decrypt-encoded-key-contents').textContent)
     encrypted_image = encryptor.decrypt_with_key(keyElem)
     output_buffer = BytesIO()
     encrypted_image.save(output_buffer, format=input_image.format)
