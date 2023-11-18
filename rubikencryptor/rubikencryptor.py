@@ -37,7 +37,7 @@ class RubikCubeCrypto:
 					}
 
 		serialized_key_dict = json.dumps(key_dict)
-		self.encoded_key = base64.b64encode(serialized_key_dict.encode('latin-1'))
+		self.encoded_key = base64.b64encode(serialized_key_dict.encode())
 		
 	def create_key_file(self, alpha: float, iter_max: int, key_filename: str) -> None:
 		"""
@@ -66,7 +66,7 @@ class RubikCubeCrypto:
 		encoded_key : bytes
 			Key File generated from encryption
 		"""
-		decoded_key = base64.b64decode(encoded_key.encode('latin-1')).decode('latin-1')
+		decoded_key = base64.b64decode(encoded_key.encode()).decode()
 		decoded_dict = json.loads(decoded_key)
 		self.Kr = decoded_dict["Kr"]
 		self.Kc = decoded_dict["Kc"]
@@ -82,7 +82,7 @@ class RubikCubeCrypto:
 		key_filename : str
 			Key File generated from encryption
 		"""
-		with open(key_filename, 'rb') as keyfile:
+		with open(key_filename, 'r') as keyfile:
 			encoded_key = keyfile.read()
 			self.load_key(encoded_key)
 
