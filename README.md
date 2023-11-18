@@ -43,7 +43,7 @@ Hyperparameters include
 
 - Python3 ( https://www.python.org/downloads/ )
 
-- Python3 package dependencies - Run `pip3 install -r requirements.txt`
+- rubikencryptor package - Run `pip3 install rubikencryptor`
 
 ## Running 
 
@@ -73,9 +73,9 @@ decrypted_image = decryptor.decrypt(key_filename='key.txt')
 decrypted_image.save('decrypted_image.png')
 ```
 
-## Example -
+## Example
 
-Original Image
+Original Image -
 
 ![](https://github.com/dannyi96/Image-Cryptography/blob/master/example/original.png)
 
@@ -90,7 +90,7 @@ $ python3 crypto_client.py --type encrypt
 
 encrypted image is stored at `example/encrypted.png` & key is stored at `example/encoded_key.txt `
 
-Encrypted Image
+Encrypted Image -
 
 ![](https://github.com/dannyi96/Image-Cryptography/blob/master/example/encrypted.png)
 
@@ -108,3 +108,23 @@ decrypted image is stored at `example/decrypted.png`
 Decrypted Image -
 
 ![](https://github.com/dannyi96/Image-Cryptography/blob/master/example/decrypted.png)
+
+## Demo using a Web App ( Early beta version )
+
+Note - this is still in early beta version. Performance enhancements, bug fixes & improved styling are expected.
+
+App hosted at https://dannyi96.github.io/Image-Cryptography/
+
+https://github.com/dannyi96/Image-Cryptography/assets/15380498/da99a862-fa52-46eb-9ff2-306e8d504da0
+
+## Future of project
+
+Refer the proposed [Roadmap](https://github.com/users/dannyi96/projects/3/views/2)
+
+Main goals include
+- Improving the Web App demonstrating this package
+- Measuring the current performance of the package ( encryption & decryption )
+- Improving the performance of the package ( encryption & decryption )
+- Improving Quality via Testcases, Linters, CICD pipeline
+- (Stretch goal) Including technical aspects of the research paper as to why the algo is resistant to various attacks as part of the WebApp
+
