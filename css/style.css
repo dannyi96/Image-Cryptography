@@ -1,3 +1,21 @@
+body {
+    margin: 0px;
+    margin-top: 1px;
+}
+
+.heading {
+    background-color: rgb(241, 242, 243);
+    border: 1px solid black;
+}
+
+.navbar {
+    border-bottom: 1px solid black;
+}
+
+hr {
+    margin: 0;
+}
+
 h1, div {
     color: red;
 }
@@ -6,15 +24,23 @@ h1, h2 {
     text-align: center;
 }
 
-.crypto-container {
+.container, .crypto-container, .decrypt-crypto-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 
-.image-container {
+.container-item, .image-container, .decrypt-image-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
+}
+
+.heading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1;
 }
