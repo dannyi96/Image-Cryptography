@@ -1,0 +1,3 @@
+packages = [
+    "rubikencryptor>=1.0.10",
+]
