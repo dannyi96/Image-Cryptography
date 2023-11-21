@@ -6,6 +6,9 @@
         <link rel="icon" href="./assets/icons/rubik.ico" type="image/x-icon">
         <link rel="stylesheet" href="./css/style.css"/>
         <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
         <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
     </head>
     <body>
@@ -18,12 +21,11 @@
 
         <!-- Nav bar for encryption & decryption -->
         <div class="container navbar">
-            <a onclick="toggleState('encryption', 'decryption')"><h1>Encryption</h1></a>
-            <a onclick="toggleState('decryption', 'encryption')"><h1>Decryption</h1></a>
+            <a onclick="toggleState('encryption', 'decryption')"><div class="button">Encryption</div></a>
+            <a onclick="toggleState('decryption', 'encryption')"><div class="button">Decryption</div></a>
         </div>
 
         <div id="encryption">
-            <h2> Encryption </h2>
             <div class="container">
                 <div class="container-item">
                     <h2>Input Image</h2>
@@ -35,8 +37,10 @@
                 <div class="container-item">
                     <h2>Output Image</h2>
                     <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
-                    <button onclick="downloadImage('output-image', 'modified.png')"> Download Image </button>
-                    <button onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button>
+                    <div class="container">
+                        <div class="container-item"><button onclick="downloadImage('output-image', 'modified.png')"> Download Image </button></div>
+                        <div class="container-item"><button onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button></div>
+                    </div>
                     <div style="display: none;" id="encrypt-encoded-key"></div>
                 </div>
             </div>
@@ -45,7 +49,6 @@
         <hr/>
         
         <div id="decryption" style="display: none;">
-            <h2> Decryption </h2>
             <div class="container">
                 <div class="container-item">
                     <h2>Input Image</h2>

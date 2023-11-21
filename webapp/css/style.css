@@ -1,6 +1,13 @@
 body {
     margin: 0px;
     margin-top: 1px;
+    font-family: 'Merriweather', serif;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 .heading {
@@ -14,14 +21,6 @@ body {
 
 hr {
     margin: 0;
-}
-
-h1, div {
-    color: red;
-}
-
-h1, h2 {
-    text-align: center;
 }
 
 .container, .crypto-container, .decrypt-crypto-container {
@@ -43,4 +42,14 @@ h1, h2 {
     align-items: center;
     justify-content: center;
     gap: 1;
+}
+
+.button {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
