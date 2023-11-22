@@ -13,33 +13,33 @@
     </head>
     <body>
         <!-- Header section -->
-        <div class="container heading">
+        <div class="row-container heading">
             <img src="./assets/icons/rubik.ico" width="50px" height="50px"/>
             <h1><a href="https://www.hindawi.com/journals/jece/2012/173931/" target="blank">Rubik's Principle based Image Cryptography</a></h1>
             <img src="./assets/icons/rubik.ico" width="50px" height="50px"/>
         </div>
 
         <!-- Nav bar for encryption & decryption -->
-        <div class="container navbar">
+        <div class="row-container navbar">
             <button class="button" onclick="toggleState('encryption', 'decryption')"> Encryption </button>
             <button class="button" onclick="toggleState('decryption', 'encryption')"> Decryption </button>
         </div>
 
         <div id="encryption">
-            <div class="container">
-                <div class="container-item">
+            <div class="row-container">
+                <div class="col-container">
                     <h2>Input Image</h2>
                     <img id="input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
                     <input type="file" id="image" accept="image/*" 
                         onchange="previewImage(event, 'input-image')">
                 </div>
                 <button id="encrypt-image" class="button"> Encrypt </button>
-                <div class="container-item">
+                <div class="col-container">
                     <h2>Output Image</h2>
                     <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
-                    <div class="container button-group">
-                        <div class="container-item"><button class="button" onclick="downloadImage('output-image', 'modified.png')"> Download Image </button></div>
-                        <div class="container-item"><button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button></div>
+                    <div class="row-container button-group">
+                        <div class="col-container"><button class="button" onclick="downloadImage('output-image', 'modified.png')"> Download Image </button></div>
+                        <div class="col-container"><button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button></div>
                     </div>
                     <div style="display: none;" id="encrypt-encoded-key"></div>
                 </div>
@@ -47,8 +47,8 @@
         </div>
         
         <div id="decryption" style="display: none;">
-            <div class="container">
-                <div class="container-item">
+            <div class="row-container">
+                <div class="col-container">
                     <h2>Input Image</h2>
                     <img id="decrypt-input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
                     <input type="file" id="image" accept="image/*" onchange="previewImage(event, 'decrypt-input-image')"> Upload Image
@@ -56,7 +56,7 @@
                     <div style="display: none;" id="decrypt-encoded-key-contents"></div>
                 </div>
                 <button id="decrypt-image" class="button"> Decrypt </button>
-                <div class="container-item">
+                <div class="col-container">
                     <h2>Output Image</h2>
                     <img id="decrypt-output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
                 </div>
