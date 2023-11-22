@@ -3,6 +3,7 @@ body {
     margin-top: 1px;
     font-family: 'Merriweather', serif;
     color: black;
+    background-color: rgb(241, 242, 243);
 }
 
 a {
@@ -17,6 +18,8 @@ a {
 
 .navbar {
     border-bottom: 1px solid black;
+    background-color: gray;
+    height: 50px;
 }
 
 hr {
@@ -44,9 +47,13 @@ hr {
     gap: 1;
 }
 
+.button-group {
+    gap: 20px;
+}
+
 .button {
     width: 100px;
-    height: 100px;
+    height: 30px;
     background-color: red;
     border-radius: 10px;
     display: flex;
