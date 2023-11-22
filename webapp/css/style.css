@@ -23,17 +23,17 @@ a {
 }
 
 hr {
-    margin: 0;
+    margin: 20px;
 }
 
-.container, .crypto-container, .decrypt-crypto-container {
+.container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
 
-.container-item, .image-container, .decrypt-image-container {
+.container-item {
     display: flex;
     flex-direction: column;
     align-items: center;
