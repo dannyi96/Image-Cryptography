@@ -1,6 +1,5 @@
-function previewImage(event, imageContainerId, imageId) {
+function previewImage(event, imageId) {
     const input = event.target;
-    const container = document.getElementById(imageContainerId);
     const image = document.getElementById(imageId);
 
     const file = input.files[0];
@@ -13,11 +12,7 @@ function previewImage(event, imageContainerId, imageId) {
         };
 
         reader.readAsDataURL(file);
-
-        container.style.display = 'block';
-    } else {
-        container.style.display = 'none';
-    }
+    } 
 }
 
 function downloadImage(imgId, fileName) {

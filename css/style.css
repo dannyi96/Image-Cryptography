@@ -1,6 +1,10 @@
+
 body {
     margin: 0px;
     margin-top: 1px;
+    font-family: 'Merriweather', serif;
+    color: black;
+    background-color: rgb(241, 242, 243);
 }
 
 .heading {
@@ -10,37 +14,45 @@ body {
 
 .navbar {
     border-bottom: 1px solid black;
+    background-color: gray;
+    height: 50px;
 }
 
 hr {
-    margin: 0;
+    margin: 20px;
 }
 
-h1, div {
-    color: red;
-}
-
-h1, h2 {
-    text-align: center;
-}
-
-.container, .crypto-container, .decrypt-crypto-container {
+.row-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    gap: 1px;
 }
 
 
-.container-item, .image-container, .decrypt-image-container {
+.col-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
 }
 
-.heading-container {
+.heading {
+    gap: 1px;
+}
+
+.button-group {
+    gap: 20px;
+}
+
+.button {
+    width: 100px;
+    height: 30px;
+    background-color: red;
+    border-radius: 10px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 1;
+    align-items: center;
+    padding: 20px;
+    border: none;
 }
