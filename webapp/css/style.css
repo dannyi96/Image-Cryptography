@@ -22,6 +22,14 @@ hr {
     margin: 20px;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100vh;
+    width: 100vw;
+}
+
 .row-container {
     display: flex;
     align-items: center;
@@ -34,8 +42,15 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 20px;
 }
+
+/* .container {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    grid-template-rows: 40% 20% 40%;
+} */
 
 .heading {
     gap: 1px;
@@ -50,9 +65,15 @@ hr {
     height: 30px;
     background-color: red;
     border-radius: 10px;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     padding: 20px;
     border: none;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    background-color: red;
+    color: blue;
 }

@@ -25,12 +25,29 @@
             <button class="button" onclick="toggleState('decryption', 'encryption')"> Decryption </button>
         </div>
 
-        <div id="encryption">
+        <!-- <div class="grid-container">
+            <h2 style="grid-area: 1/1/1/1;">Input Image</h2>
+            <h2 style="grid-area: 1/3/2/4;">Output Image</h2>
+            <button style="grid-area: 2/2/2/2;" id="encrypt-image" class="button"> Encrypt </button>
+            <div style="grid-area: 2/1/3/2;">
+                <img id="input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px"><br/>
+                <input type="file" accept=".png" id="image"
+                    onchange="previewImage(event, 'input-image')">
+            </div>
+            <img style="grid-area: 2/3/3/3;" id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
+            <div style="grid-area: 3/3/4/4;">
+                <button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button>
+                <button class="button" onclick="downloadImage('output-image', 'modified.png')"> Download Image </button>
+            </div>
+            
+        </div> -->
+
+        <div id="encryption" class="container">
             <div class="row-container">
                 <div class="col-container">
                     <h2>Input Image</h2>
                     <img id="input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
-                    <input type="file" id="image" accept="image/*" 
+                    <input type="file" accept=".png" id="image"
                         onchange="previewImage(event, 'input-image')">
                 </div>
                 <button id="encrypt-image" class="button"> Encrypt </button>
@@ -51,8 +68,8 @@
                 <div class="col-container">
                     <h2>Input Image</h2>
                     <img id="decrypt-input-image" src="./assets/imgs/placeholder.png" alt="Input Image" width="300px" height="300px">
-                    <input type="file" id="image" accept="image/*" onchange="previewImage(event, 'decrypt-input-image')"> Upload Image
-                    <input type="file" id="decrypt-encoded-key" accept=".txt" onchange="previewText(event, 'decrypt-encoded-key-contents')"> Upload Key
+                    <input type="file" accept=".png" id="image" onchange="previewImage(event, 'decrypt-input-image')"> Upload Image
+                    <input type="file" accept=".txt" id="decrypt-encoded-key" onchange="previewText(event, 'decrypt-encoded-key-contents')"> Upload Key
                     <div style="display: none;" id="decrypt-encoded-key-contents"></div>
                 </div>
                 <button id="decrypt-image" class="button"> Decrypt </button>
