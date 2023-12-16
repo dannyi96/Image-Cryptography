@@ -24,10 +24,10 @@ hr {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    height: 100vh;
-    width: 100vw;
+    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-rows: 1fr 3fr 1fr;
+    /* height: 100vh;
+    width: 100vw; */
 }
 
 .grid-item {
