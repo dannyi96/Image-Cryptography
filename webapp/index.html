@@ -21,25 +21,28 @@
 
         <!-- Nav bar for encryption & decryption -->
         <div class="row-container navbar">
-            <button class="button" onclick="toggleState('encryption', 'decryption')"> Encryption </button>
-            <button class="button" onclick="toggleState('decryption', 'encryption')"> Decryption </button>
+            <button class="button" id="encrypt-nav-item"> Encryption </button>
+            <button class="button" id="decrypt-nav-item"> Decryption </button>
         </div>
 
         <div class="grid-container">
             <h2 class="grid-item input-img-heading">Input Image</h2>
             <h2 class="grid-item output-img-heading">Output Image</h2>
-            <button id="encrypt-image" class="grid-item action-btn button"> Encrypt </button>
+            <button id="transform-img-btn" class="grid-item action-btn button"> Encrypt </button>
             <img class="grid-item input-img" id="input-img" src="./assets/imgs/placeholder.png" alt="Input Image">
             <img class="grid-item output-img" id="output-img" src="./assets/imgs/placeholder.png" alt="Output Image">
-            <div class="grid-item img-uploader">
+            <div class="grid-item img-uploader" id="img-uploader">
                 <button id="img-uploader-btn" class="button"> Upload Image </button>
-                <input type="file" accept=".png" id="file-input"
+                <input type="file" accept=".png" id="img-input"
                     onchange="previewImage(event, 'input-img')" style="display: none;">
             </div>
-            <!-- <input style="display: none;" type="file" accept=".png" id="image" onchange="previewImage(event, 'decrypt-input-image')"> Upload Image
-            <input style="display: none;" type="file" accept=".txt" id="decrypt-encoded-key" onchange="previewText(event, 'decrypt-encoded-key-contents')"> Upload Key
-             -->
-            <div class="grid-item download-btns">
+            <div style="display: none;" class="grid-item img-key-uploader" id="img-key-uploader">
+                <button id="encrypted-img-uploader-btn" class="button"> Upload Image </button>
+                <button id="key-uploader-btn" class="button"> Upload Key </button>
+                <input type="file" id="encrypted-img-input" style="display: none;" accept=".png" onchange="previewImage(event, 'input-img')">
+                <input type="file" id="key-input" style="display: none;" accept=".txt">
+            </div>
+            <div class="grid-item download-btns" id="img-key-downloader">
                 <button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button>
                 <button class="button" onclick="downloadImage('output-img', 'modified.png')"> Download Image </button>
             </div>

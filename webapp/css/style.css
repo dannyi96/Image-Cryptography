@@ -59,8 +59,14 @@ hr {
     height: 300px;
 }
 
-.img-uploader {
+.img-uploader, .img-key-uploader {
     grid-area: 3/1/4/2;
+}
+
+.img-key-uploader {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .download-btns {
