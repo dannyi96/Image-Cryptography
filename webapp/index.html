@@ -28,18 +28,19 @@
         <div class="grid-container">
             <h2 class="grid-item input-img-heading">Input Image</h2>
             <h2 class="grid-item output-img-heading">Output Image</h2>
-            <button class="grid-item action-btn button"> Encrypt </button>
-            <img class="grid-item input-img" src="./assets/imgs/placeholder.png" alt="Input Image">
-            <img class="grid-item output-img" src="./assets/imgs/placeholder.png" alt="Output Image">
+            <button id="encrypt-image" class="grid-item action-btn button"> Encrypt </button>
+            <img class="grid-item input-img" id="input-img" src="./assets/imgs/placeholder.png" alt="Input Image">
+            <img class="grid-item output-img" id="output-img" src="./assets/imgs/placeholder.png" alt="Output Image">
             <input class="grid-item img-uploader" 
                 type="file" accept=".png"
-                onchange="previewImage(event, 'input-image')">
+                onchange="previewImage(event, 'input-img')">
             
             <div class="grid-item download-btns">
                 <button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button>
-                <button class="button" onclick="downloadImage('output-image', 'modified.png')"> Download Image </button>
+                <button class="button" onclick="downloadImage('output-img', 'modified.png')"> Download Image </button>
             </div>
         </div>
+        <div style="display: none;" id="encrypt-encoded-key"></div>
 <!-- 
         <div id="encryption" class="container">
             <div class="row-container">
