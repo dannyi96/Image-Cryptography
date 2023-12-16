@@ -27,17 +27,17 @@ def encrypt_image():
     image_bytes = output_buffer.getvalue()
     encoded_image = base64.b64encode(image_bytes).decode('utf-8')
     document.getElementById('output-img').src = image_prefix + 'base64,' + encoded_image
-    document.getElementById('encrypt-encoded-key').innerText = encryptor.encoded_key
+    document.getElementById('crypto-key').innerText = encryptor.encoded_key
 
 def decrypt_image():
     image_prefix, image_data = document.getElementById('input-img').src.split('base64,')
     image_bytes = base64.b64decode(image_data)
     input_image = Image.open(BytesIO(image_bytes))
     encryptor = RubikCubeCrypto(input_image)
-    keyElem = eval(document.getElementById('decrypt-encoded-key-contents').textContent)
+    keyElem = eval(document.getElementById('crypto-key').textContent)
     encrypted_image = encryptor.decrypt_with_key(keyElem)
     output_buffer = BytesIO()
     encrypted_image.save(output_buffer, format=input_image.format)
     image_bytes = output_buffer.getvalue()
     encoded_image = base64.b64encode(image_bytes).decode('utf-8')
-    document.getElementById('output-image').src = image_prefix + 'base64,' + encoded_image
+    document.getElementById('output-img').src = image_prefix + 'base64,' + encoded_image

@@ -40,14 +40,14 @@
                 <button id="encrypted-img-uploader-btn" class="button"> Upload Image </button>
                 <button id="key-uploader-btn" class="button"> Upload Key </button>
                 <input type="file" id="encrypted-img-input" style="display: none;" accept=".png" onchange="previewImage(event, 'input-img')">
-                <input type="file" id="key-input" style="display: none;" accept=".txt">
+                <input type="file" id="key-input" style="display: none;" accept=".txt" onchange="previewText(event, 'crypto-key')">
             </div>
             <div class="grid-item download-btns" id="img-key-downloader">
-                <button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button>
+                <button class="button" onclick="downloadKey('crypto-key', 'key.txt')"> Download Key </button>
                 <button class="button" onclick="downloadImage('output-img', 'modified.png')"> Download Image </button>
             </div>
         </div>
-        <div style="display: none;" id="encrypt-encoded-key"></div>
+        <div style="display: none;" id="crypto-key"></div>
 <!-- 
         <div id="encryption" class="container">
             <div class="row-container">
@@ -63,9 +63,9 @@
                     <img id="output-image" src="./assets/imgs/placeholder.png" alt="Output Image" width="300px" height="300px">
                     <div class="row-container button-group">
                         <div class="col-container"><button class="button" onclick="downloadImage('output-image', 'modified.png')"> Download Image </button></div>
-                        <div class="col-container"><button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button></div>
+                        <div class="col-container"><button class="button" onclick="downloadKey('crypto-key', 'key.txt')"> Download Key </button></div>
                     </div>
-                    <div style="display: none;" id="encrypt-encoded-key"></div>
+                    <div style="display: none;" id="crypto-key"></div>
                 </div>
             </div>
         </div>
