@@ -83,12 +83,6 @@ hr {
     gap: 20px;
 }
 
-/* .container {
-    display: grid;
-    grid-template-columns: 40% 20% 40%;
-    grid-template-rows: 40% 20% 40%;
-} */
-
 .heading {
     gap: 1px;
 }
@@ -98,7 +92,7 @@ hr {
 }
 
 .button {
-    width: 100px;
+    width: 120px;
     height: 30px;
     background-color: red;
     border-radius: 10px;
@@ -109,8 +103,4 @@ hr {
     border: none;
     cursor: pointer;
 }
-/* 
-input[type="file"] {
-    background-color: red;
-    color: blue;
-} */
+

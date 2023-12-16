@@ -56,3 +56,8 @@ function previewText(event, divContainerId) {
         reader.readAsText(file);
     }
 }
+
+// Trigger click on the hidden file input when the custom button is clicked
+document.getElementById('img-uploader-btn').addEventListener('click', function() {
+    document.getElementById('file-input').click();
+});

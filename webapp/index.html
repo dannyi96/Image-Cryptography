@@ -31,10 +31,14 @@
             <button id="encrypt-image" class="grid-item action-btn button"> Encrypt </button>
             <img class="grid-item input-img" id="input-img" src="./assets/imgs/placeholder.png" alt="Input Image">
             <img class="grid-item output-img" id="output-img" src="./assets/imgs/placeholder.png" alt="Output Image">
-            <input class="grid-item img-uploader" 
-                type="file" accept=".png"
-                onchange="previewImage(event, 'input-img')">
-            
+            <div class="grid-item img-uploader">
+                <button id="img-uploader-btn" class="button"> Upload Image </button>
+                <input type="file" accept=".png" id="file-input"
+                    onchange="previewImage(event, 'input-img')" style="display: none;">
+            </div>
+            <!-- <input style="display: none;" type="file" accept=".png" id="image" onchange="previewImage(event, 'decrypt-input-image')"> Upload Image
+            <input style="display: none;" type="file" accept=".txt" id="decrypt-encoded-key" onchange="previewText(event, 'decrypt-encoded-key-contents')"> Upload Key
+             -->
             <div class="grid-item download-btns">
                 <button class="button" onclick="downloadKey('encrypt-encoded-key', 'key.txt')"> Download Key </button>
                 <button class="button" onclick="downloadImage('output-img', 'modified.png')"> Download Image </button>
