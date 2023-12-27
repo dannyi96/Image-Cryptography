@@ -1,6 +1,5 @@
-function previewImage(event, imageContainerId, imageId) {
+function previewImage(event, imageId) {
     const input = event.target;
-    const container = document.getElementById(imageContainerId);
     const image = document.getElementById(imageId);
 
     const file = input.files[0];
@@ -13,11 +12,7 @@ function previewImage(event, imageContainerId, imageId) {
         };
 
         reader.readAsDataURL(file);
-
-        container.style.display = 'block';
-    } else {
-        container.style.display = 'none';
-    }
+    } 
 }
 
 function downloadImage(imgId, fileName) {
@@ -61,3 +56,32 @@ function previewText(event, divContainerId) {
         reader.readAsText(file);
     }
 }
+
+// Trigger click on the hidden file input when the custom button is clicked
+document.getElementById('img-uploader-btn').addEventListener('click', function() {
+    document.getElementById('img-input').click();
+});
+
+document.getElementById('encrypted-img-uploader-btn').addEventListener('click', function() {
+    document.getElementById('encrypted-img-input').click();
+});
+
+document.getElementById('key-uploader-btn').addEventListener('click', function() {
+    document.getElementById('key-input').click();
+});
+
+document.getElementById('encrypt-nav-item').addEventListener('click', function() {
+    document.getElementById('img-key-uploader').style.display = "none";
+    document.getElementById('img-uploader').style.display = "flex";
+    document.getElementById('img-key-downloader').style.display = "flex";
+    document.getElementById('transform-img-btn').innerText = "Encrypt";
+});
+
+document.getElementById('decrypt-nav-item').addEventListener('click', function() {
+    document.getElementById('img-key-uploader').style.display = "flex";
+    document.getElementById('img-uploader').style.display = "none";
+    document.getElementById('img-key-downloader').style.display = "none";
+    document.getElementById('transform-img-btn').innerText = "Decrypt";
+});
+
+
