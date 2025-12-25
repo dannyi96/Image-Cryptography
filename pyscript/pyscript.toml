@@ -1,3 +1,8 @@
 packages = [
     "rubikencryptor>=1.0.10",
+    "pillow",
+    "numpy"
 ]
+
+[pyscript]
+version = "2024.1.1"
