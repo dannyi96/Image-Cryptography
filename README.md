@@ -115,7 +115,7 @@ Note - this is still in early beta version. Performance enhancements, bug fixes 
 
 App hosted at https://dannyi96.github.io/Image-Cryptography/
 
-https://github.com/dannyi96/Image-Cryptography/assets/15380498/da99a862-fa52-46eb-9ff2-306e8d504da0
+<img width="1289" height="973" alt="Screenshot 2025-12-26 at 1 34 34 AM" src="https://github.com/user-attachments/assets/87ebf8b8-62ed-441f-b6fd-405a3752a9ef" />
 
 ## Future of project
 
