@@ -122,7 +122,6 @@ https://github.com/dannyi96/Image-Cryptography/assets/15380498/da99a862-fa52-46e
 Refer the proposed [Roadmap](https://github.com/users/dannyi96/projects/3/views/2)
 
 Main goals include
-- Improving the Web App demonstrating this package
 - Measuring the current performance of the package ( encryption & decryption )
 - Improving the performance of the package ( encryption & decryption )
 - Improving Quality via Testcases, Linters, CICD pipeline
