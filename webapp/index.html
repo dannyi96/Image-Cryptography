@@ -3,52 +3,172 @@
     <head>
         <title>Rubik's Principle based Image Cryptography</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="./assets/icons/rubik.ico" type="image/x-icon">
         <link rel="stylesheet" href="./css/style.css"/>
-        <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
-        <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+        <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
     </head>
     <body>
+        <!-- Loading overlay -->
+        <div id="loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p id="loading-text">Processing image...</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Header section -->
-        <div class="row-container heading">
-            <img src="./assets/icons/rubik.ico" width="50px" height="50px"/>
-            <h1><a href="https://www.hindawi.com/journals/jece/2012/173931/" target="blank">Rubik's Principle based Image Cryptography</a></h1>
-            <img src="./assets/icons/rubik.ico" width="50px" height="50px"/>
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <img src="./assets/icons/rubik.ico" width="40" height="40" alt="Rubik's Cube"/>
+                    <h1><a href="https://www.hindawi.com/journals/jece/2012/173931/" target="_blank">Rubik's Principle Image Cryptography</a></h1>
+                </div>
+                <div class="header-info">
+                    <i class="fas fa-info-circle" id="info-btn" title="About this algorithm"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Info Modal -->
+        <div id="info-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" id="close-modal">&times;</span>
+                <h2>About Rubik's Cube Principle</h2>
+                <p>This algorithm implements image encryption based on the research paper "A Secure Image Encryption Algorithm Based on Rubik's Cube Principle".</p>
+                <h3>How it works:</h3>
+                <ul>
+                    <li><strong>Rolling Rows:</strong> Shift pixel rows based on sum parity</li>
+                    <li><strong>Rolling Columns:</strong> Shift pixel columns based on sum parity</li>
+                    <li><strong>XOR Operations:</strong> Apply bitwise XOR with generated keys</li>
+                </ul>
+                <p>The process is repeated for multiple iterations to ensure strong encryption.</p>
+            </div>
         </div>
 
-        <!-- Nav bar for encryption & decryption -->
-        <div class="row-container navbar">
-            <button class="button" id="encrypt-nav-item"> Encryption </button>
-            <button class="button" id="decrypt-nav-item"> Decryption </button>
-        </div>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <button class="nav-btn active" id="encrypt-nav-item" data-mode="encrypt">
+                    <i class="fas fa-lock"></i>
+                    <span>Encryption</span>
+                </button>
+                <button class="nav-btn" id="decrypt-nav-item" data-mode="decrypt">
+                    <i class="fas fa-unlock"></i>
+                    <span>Decryption</span>
+                </button>
+            </div>
+        </nav>
 
-        <div class="grid-container">
-            <h2 class="grid-item input-img-heading">Input Image</h2>
-            <h2 class="grid-item output-img-heading">Output Image</h2>
-            <button id="transform-img-btn" class="grid-item action-btn button"> Encrypt </button>
-            <img class="grid-item input-img" id="input-img" src="./assets/imgs/placeholder.png" alt="Input Image">
-            <img class="grid-item output-img" id="output-img" src="./assets/imgs/placeholder.png" alt="Output Image">
-            <div class="grid-item img-uploader" id="img-uploader">
-                <button id="img-uploader-btn" class="button"> Upload Image </button>
-                <input type="file" accept=".png" id="img-input"
-                    onchange="previewImage(event, 'input-img')" style="display: none;">
-            </div>
-            <div style="display: none;" class="grid-item img-key-uploader" id="img-key-uploader">
-                <button id="encrypted-img-uploader-btn" class="button"> Upload Image </button>
-                <button id="key-uploader-btn" class="button"> Upload Key </button>
-                <input type="file" id="encrypted-img-input" style="display: none;" accept=".png" onchange="previewImage(event, 'input-img')">
-                <input type="file" id="key-input" style="display: none;" accept=".txt" onchange="previewText(event, 'crypto-key')">
-            </div>
-            <div class="grid-item download-btns" id="img-key-downloader">
-                <button class="button" onclick="downloadKey('crypto-key', 'key.txt')"> Download Key </button>
-                <button class="button" onclick="downloadImage('output-img', 'modified.png')"> Download Image </button>
-            </div>
-        </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Parameters Section -->
+            <section class="parameters-section" id="parameters-section">
+                <h3><i class="fas fa-cog"></i> Encryption Parameters</h3>
+                <div class="parameter-grid">
+                    <div class="parameter-item">
+                        <label for="alpha-input">Alpha (α)</label>
+                        <input type="number" id="alpha-input" min="1" max="16" value="8" title="Bit depth for key generation (1-16)">
+                        <small>Key generation parameter</small>
+                    </div>
+                    <div class="parameter-item">
+                        <label for="iter-input">Iterations</label>
+                        <input type="number" id="iter-input" min="1" max="50" value="10" title="Number of encryption iterations (1-50)">
+                        <small>Encryption rounds</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Image Processing Section -->
+            <section class="image-section">
+                <div class="image-container">
+                    <!-- Input Image -->
+                    <div class="image-panel">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-image"></i> Input Image</h3>
+                            <div class="image-info" id="input-info"></div>
+                        </div>
+                        <div class="image-display">
+                            <img id="input-img" src="./assets/imgs/placeholder.png" alt="Input Image">
+                            <div class="image-overlay" id="input-overlay">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload image</p>
+                                <small>Supports PNG, JPG, JPEG</small>
+                            </div>
+                        </div>
+                        <div class="upload-section" id="upload-section">
+                            <button class="upload-btn" id="img-uploader-btn">
+                                <i class="fas fa-upload"></i>
+                                Upload Image
+                            </button>
+                            <input type="file" accept="image/*" id="img-input" style="display: none;">
+                        </div>
+                        <div class="upload-section" id="decrypt-upload-section" style="display: none;">
+                            <button class="upload-btn" id="encrypted-img-uploader-btn">
+                                <i class="fas fa-image"></i>
+                                Upload Encrypted Image
+                            </button>
+                            <button class="upload-btn secondary" id="key-uploader-btn">
+                                <i class="fas fa-key"></i>
+                                Upload Key File
+                            </button>
+                            <input type="file" id="encrypted-img-input" style="display: none;" accept="image/*">
+                            <input type="file" id="key-input" style="display: none;" accept=".txt">
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="action-panel">
+                        <button id="transform-img-btn" class="action-btn" disabled>
+                            <i class="fas fa-lock" id="action-icon"></i>
+                            <span id="action-text">Encrypt</span>
+                        </button>
+                        <div class="performance-info" id="performance-info" style="display: none;">
+                            <small>Processing time: <span id="process-time">--</span>ms</small>
+                        </div>
+                    </div>
+
+                    <!-- Output Image -->
+                    <div class="image-panel">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-image"></i> Output Image</h3>
+                            <div class="image-info" id="output-info"></div>
+                        </div>
+                        <div class="image-display">
+                            <img id="output-img" src="./assets/imgs/placeholder.png" alt="Output Image">
+                            <div class="image-overlay" id="output-overlay" style="display: none;">
+                                <i class="fas fa-check-circle"></i>
+                                <p>Processing complete!</p>
+                            </div>
+                        </div>
+                        <div class="download-section" id="download-section" style="display: none;">
+                            <button class="download-btn" id="download-image-btn">
+                                <i class="fas fa-download"></i>
+                                Download Image
+                            </button>
+                            <button class="download-btn secondary" id="download-key-btn">
+                                <i class="fas fa-key"></i>
+                                Download Key
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Status Messages -->
+            <div id="status-messages" class="status-messages"></div>
+        </main>
+
+        <!-- Hidden elements -->
         <div style="display: none;" id="crypto-key"></div>
-        <hr/>
 
         <script src="./js/script.js"></script>
         <script type="py" src="./pyscript/image_crypto.py" config="./pyscript/pyscript.toml"></script>
