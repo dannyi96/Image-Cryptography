@@ -111,19 +111,7 @@ Decrypted Image -
 
 ## Demo using a Web App
 
-Note - this is still in early beta version. Performance enhancements, bug fixes & improved styling are expected.
-
 App hosted at https://dannyi96.github.io/Image-Cryptography/
 
 <img width="1289" height="973" alt="Screenshot 2025-12-26 at 1 34 34 AM" src="https://github.com/user-attachments/assets/87ebf8b8-62ed-441f-b6fd-405a3752a9ef" />
-
-## Future of project
-
-Refer the proposed [Roadmap](https://github.com/users/dannyi96/projects/3/views/2)
-
-Main goals include
-- Measuring the current performance of the package ( encryption & decryption )
-- Improving the performance of the package ( encryption & decryption )
-- Improving Quality via Testcases, Linters, CICD pipeline
-- (Stretch goal) Including technical aspects of the research paper as to why the algo is resistant to various attacks as part of the WebApp
 
