@@ -109,7 +109,7 @@ Decrypted Image -
 
 ![](https://github.com/dannyi96/Image-Cryptography/blob/master/example/decrypted.png)
 
-## Demo using a Web App ( Early beta version )
+## Demo using a Web App
 
 Note - this is still in early beta version. Performance enhancements, bug fixes & improved styling are expected.
 
